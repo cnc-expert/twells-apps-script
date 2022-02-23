@@ -10,8 +10,8 @@ Format:
 
 where:
 
-- `range` - a range containing 114C order codes.
-- `multiline` - a boolean value. If false (default), then it outputs in one line (laconic mode).
+- `range` - A range containing 114C order codes.
+- `multiline` - A boolean value. If false (default), then it outputs in one line (laconic mode).
 Otherwise it emits one line per item (verbose mode).
 
 ## D01HUMAN
@@ -23,8 +23,8 @@ Format:
 
 Parameters:
 
-- `range` - a range containing D01 order codes.
-- `multiline` - a boolean value. If false (default), then it outputs in one line (laconic mode).
+- `range` - A range containing D01 order codes.
+- `multiline` - A boolean value. If false (default), then it outputs in one line (laconic mode).
 Otherwise it emits one line per item (verbose mode).
 
 ## MAKEC114
@@ -36,9 +36,9 @@ Format:
 
 Parameters:
 
-- `unit` - dimensional unit: `mm` or `inch`.
-- `immersLen` - immersion "U" length.
-- `mountStyle` - mounting style. One of:
+- `unit` - Dimensional unit: `mm` or `inch`.
+- `immersLen` - Immersion "U" length.
+- `mountStyle` - Mounting style. One of:
   - `threaded`;
   - `flange, partial weld`;
   - `flange, full weld`;
@@ -47,18 +47,18 @@ Parameters:
   - `van stone`;
   - `socket weld`;
   - `weld-in`.
-- `processConn` - process connection "P". Now supported:
+- `processConn` - Process connection "P". Now supported:
   - Thread mount thermowells with **tapered thread**:
     - ANPT threads:
 	  `1/2-14 ANPT`; `3/4-14 ANPT`; `1-11.5 ANPT`; `1 1/2-11.5 ANPT`.
-	- pipe threads:
+	- Pipe threads:
 	  `R1/2` or `1/2 BSPT`;
 	  `R3/4` or `3/4 BSPT`;
 	  `R1` or `1 BSPT`.
   - Thread mount thermowells with **parallel thread**:
-	- metric threads:
+	- Metric threads:
       `M20x1.5`, `M24x1.5`, `M27x2`, `M33x2`.
-	- pipe threads:
+	- Pipe threads:
 	  `G1/2` or `1/2 BSPF`;
 	  `G3/4` or `3/4 BSPF`;
 	  `G1` or `1 BSPF`.
@@ -69,8 +69,8 @@ Parameters:
   <!-- TO-DO: Weld mount thermowells - socket weld -->
   <!-- TO-DO: Weld mount - weld-in thermowells -->
   <!-- TO-DO: Weld mount thermowells - DIN form 4 -->
-- `stemStyle` - stem form: `straight`, `tapered` or `stepped`.
-- `material` - thermowell material. One of:
+- `stemStyle` - Stem form: `straight`, `tapered` or `stepped`.
+- `material` - Thermowell material. One of:
 
   `304` or `304L`; `310`;
   `316` or `316L`; `316 NORSOK` or `316L NORSOK` (NORSOK standards);
@@ -93,8 +93,8 @@ Parameters:
   `duplex 2205`; `duplex 2205 NORSOK`;
   `molybdenum`; `nickel 200`;
   `super duplex`; `super duplex NORSOK`; `titan grade 2`.
-- `headLen` - head "H" length.
-- `instrConn` - instrument connection "N". One of:
+- `headLen` - Head "H" length.
+- `instrConn` - Instrument connection "N". One of:
   - `1/2-14 ANPT`;
   - `1/2-14 NPSM`;
   - `3/4-14 ANPT`;
@@ -105,7 +105,7 @@ Parameters:
   - `M27x2`;
   - `G1/2`;
   - `G3/4`.
-- `options` - list of options. Separated with any non-letter and non-numeric symbol, or without any separator.
+- `options` - List of options. Separated with any non-letter and non-numeric symbol, or without any separator. May be empty.
 
 ## MAKED01
 Form an order code for the D01 thermowell.
@@ -116,38 +116,38 @@ Format:
 
 Parameters:
 
-- `immersLen` - immersion "U" length.
-- `mountStyle` - mounting style. One of:
+- `immersLen` - Immersion "U" length.
+- `mountStyle` - Mounting style. One of:
   - `threaded`;
   - `flange`;
   - `weld-in`.
-- `processConn` - process connection "P". Now supported:
+- `processConn` - Process connection "P". Now supported:
   - Thread mount thermowells with **tapered thread**:
     - ANPT threads:
 	  `1/2-14 ANPT`; `3/4-14 ANPT`; `1-11.5 ANPT`.
-	- pipe threads:
+	- Pipe threads:
 	  `R1/2` or `1/2 BSPT`;
 	  `R3/4` or `3/4 BSPT`;
 	  `R1` or `1 BSPT`.
   - Thread mount thermowells with **parallel thread**:
-	- metric threads:
+	- Metric threads:
       `M20x1.5`, `M24x1.5`, `M27x2`, `M33x2`.
-	- pipe threads:
+	- Pipe threads:
 	  `G1/2` or `1/2 BSPF`;
 	  `G3/4` or `3/4 BSPF`;
 	  `G1` or `1 BSPF`.
   <!-- TO-DO: Weld-in thermowells -->
   <!-- TO-DO: Flange mount thermowells -->
-- `stemStyle` - stem form: `straight`, `tapered` or `stepped`.
-- `material` - thermowell material. One of:
+- `stemStyle` - Stem form: `straight`, `tapered` or `stepped`.
+- `material` - Thermowell material. One of:
 
   `304`; `304L`; `304 teflon` (with PFA coating); `310`;
   `316`; `316L`; `316Ti`; `316 tantalum` (with tantalum sheath); `321`;
   `alloy 20`; `alloy 400`; `alloy 600`; `alloy B`; `alloy C`;
   `carbon steel`; `chrome-moly F11`; `chrome-moly F22`;
   `molybednum`; `nickel 200`; `special`; `titanium`;
-- `headLen` - head "T" length.
-- `instrConn` - instrument connection "N". One of:
+- `headLen` - Head "T" length.
+- `instrConn` - Instrument connection "N". One of:
   + `M18x1.5`;
   + `M20x1.5`;
   + `M22x1.5`;
@@ -161,18 +161,18 @@ Parameters:
   + `R1/2` or `1/2 BSPT`;
   + `G1/2` or `1/2 BSPF`;
   + `G3/4` or `3/4 BSPF`;
-- `options` - list of options. Separated with any non-letter and non-numeric symbol, or without any separator.
+- `options` - List of options. Separated with any non-letter and non-numeric symbol, or without any separator. May be empty.
 
 ## C114TOD01
 Converts 114C order code to D01 code. Some options may be ignored.
 
 Format:
 
-`=C114TOD01(code114C)`
+`=C114TOD01(range)`
 
 Parameters:
 
-- `code114C` - order code of 114C thermowell.
+- `range` - A range containing order code strings of 114C thermowells.
 
 
 ## D01TOC114
@@ -180,30 +180,30 @@ Converts D01 order code to 114C code. Some options may be ignored.
 
 Format:
 
-`=D01TOC114(codeD01)`
+`=D01TOC114(range)`
 
 Parameters:
 
-- `codeD01` - order code of D01 thermowell.
+- `range` - A range containing order code strings of D01 thermowell.
 
 ## D01TOD96
 Converts D01 order code to 0096 format.
 
 Format:
 
-`=D01TOD96(codeD01)`
+`=D01TOD96(range)`
 
 Parameters:
 
-- `codeD01` - order code of D01 thermowell.
+- `range` - A range containing order code strings of D01 thermowell.
 
 ## D96TOD01
 Converts 0096 order code to D01 format.
 
 Format:
 
-`=D96TOD01(code0096)`
+`=D96TOD01(range)`
 
 Parameters:
 
-- `code0096` - order code in 0096 format.
+- `range` - A range containing order code strings of 0096 format.
