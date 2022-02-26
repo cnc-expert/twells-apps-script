@@ -1,3 +1,28 @@
+const ThermowellModels = {
+	model114C: "114C",
+	modelD01:  "D01",
+	model0096: "0096",
+	modelUnknown: ""
+}
+
+/*
+ * Detects thermowell model
+ * @param  {string}  code  An order code.
+ * @return {string}  The order code 114C.
+ */
+function detectModel(code) {
+	switch (true) {
+		case !!code.match(/^\s*114/i):
+			return ThermowellModels.model114C;
+		case !!code.match(/^\s*D0*1/i):
+			return ThermowellModels.modelD01;
+		case !!code.match(/^\s*0*96/i):
+			return ThermowellModels.model0096;
+		default:
+			return ThermowellModels.modelUnknown;
+	}
+}
+
 class RosemountTWells {
 
   /**
