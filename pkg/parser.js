@@ -1,11 +1,3 @@
-/** @OnlyCurrentDoc */
-
-function test_twells() {
-  const code = "114CM0085TDA2SG040ETR";
-  const params = RosemountTWells.C114_decode(code);
-  Logger.log(params);
-}
-
 class RosemountTWells {
 
   /**
@@ -41,4 +33,9 @@ class RosemountTWells {
     return params;
   }
 
+}
+
+module.exports = {
+	ThermowellModels,
+	detectModel
 }

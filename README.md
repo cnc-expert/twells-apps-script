@@ -1,38 +1,27 @@
 # twells-apps-script
 Thermowell supporting custom functions for Google Spreadsheet.
 
-## C114HUMAN
-Display human readable form of 114C order code.
+## HUMAN
+Display human readable form of an order code.
 
 Format:
 
-`=C114HUMAN(range, multiline)`
+`=HUMAN(range, multiline)`
 
 where:
 
-- `range` - A range containing 114C order codes.
+- `range` - A range containing order codes.
 - `multiline` - A boolean value. If false (default), then it outputs in one line (laconic mode).
 Otherwise it emits one line per item (verbose mode).
 
-## D01HUMAN
-Display human readable form of D01 order code.
 
-Format:
 
-`=D01HUMAN(range, multiline)`
-
-Parameters:
-
-- `range` - A range containing D01 order codes.
-- `multiline` - A boolean value. If false (default), then it outputs in one line (laconic mode).
-Otherwise it emits one line per item (verbose mode).
-
-## MAKEC114
+## MAKE114C
 Form an order code for the 114C thermowell.
 
 Format:
 
-`=MAKEC114(unit, immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options)`
+`=MAKE114C(unit, immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options)`
 
 Parameters:
 
@@ -107,6 +96,8 @@ Parameters:
   - `G3/4`.
 - `options` - List of options. Separated with any non-letter and non-numeric symbol, or without any separator. May be empty.
 
+
+
 ## MAKED01
 Form an order code for the D01 thermowell.
 
@@ -163,47 +154,41 @@ Parameters:
   + `G3/4` or `3/4 BSPF`;
 - `options` - List of options. Separated with any non-letter and non-numeric symbol, or without any separator. May be empty.
 
-## C114TOD01
-Converts 114C order code to D01 code. Some options may be ignored.
+
+
+## TOD01
+Recognize order codes (what is a model) and converts to D01 code. Some options may be ignored.
 
 Format:
 
-`=C114TOD01(range)`
+`=TOD01(range)`
 
 Parameters:
 
-- `range` - A range containing order code strings of 114C thermowells.
+- `range` - A range containing order code strings.
 
 
-## D01TOC114
-Converts D01 order code to 114C code. Some options may be ignored.
+
+## TO114C
+Recognize order codes (what is a model) and converts to 114C code. Some options may be ignored.
 
 Format:
 
-`=D01TOC114(range)`
+`=TO114C(range)`
 
 Parameters:
 
-- `range` - A range containing order code strings of D01 thermowell.
+- `range` - A range containing order code strings.
 
-## D01TOD96
-Converts D01 order code to 0096 format.
+
+
+## TO0096
+Recognize order codes (what is a model) and converts to 0096 code. Some options may be ignored.
 
 Format:
 
-`=D01TOD96(range)`
+`=TO0096(range)`
 
 Parameters:
 
-- `range` - A range containing order code strings of D01 thermowell.
-
-## D96TOD01
-Converts 0096 order code to D01 format.
-
-Format:
-
-`=D96TOD01(range)`
-
-Parameters:
-
-- `range` - A range containing order code strings of 0096 format.
+- `range` - A range containing order code strings.

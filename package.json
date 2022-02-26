@@ -1,5 +1,33 @@
 {
-  "dependencies": {
-    "@types/google-apps-script": "^1.0.45"
-  }
+	"name": "twells-apps-script",
+	"description": "Thermowell supporting custom functions for Google Spreadsheet.",
+	"version": "0.0.1",
+	"main": "custom_functions.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cnc-expert/twells-apps-script.git"
+	},
+	"keywords": [
+		"Rosemount",
+		"Thermowells",
+		"D01",
+		"0096",
+		"114C",
+		"Spreadsheet"
+	],
+	"author": "cnc-expert",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/cnc-expert/twells-apps-script/issues"
+	},
+	"homepage": "https://github.com/cnc-expert/twells-apps-script#readme",
+	"scripts": {
+		"test": "jest"
+	},
+	"dependencies": {
+		"@types/google-apps-script": "^1.0.45"
+	},
+	"devDependencies": {
+		"jest": "^27.5.1"
+	}
 }

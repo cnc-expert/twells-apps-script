@@ -1,37 +1,20 @@
 /** @OnlyCurrentDoc */
 
 /**
-   * Display human readable form of 114C order code.
-   * @param  {Range}    range      A range containing 114C order codes.
+   * Display human readable form of an order code.
+   * @param  {Range}    range      A range containing order codes.
    * @param  {boolean}  multiline  A boolean value.
    * 	If false (default), then it outputs in one line (laconic mode).
    * 	Otherwise it emits one line per item (verbose mode).
    * @return {string} The string with decoded parameters.
    * @customfunction
    */
-function C114HUMAN(range, multiline) {
+function HUMAN(range, multiline) {
 	multiline = multiline ? true : false;
 
 	// to-do
 
-	return "C114HUMAN: to-do";
-}
-
-/**
-   * Display human readable form of D01 order code.
-   * @param  {Range}    range      A range containing D01 order codes.
-   * @param  {boolean}  multiline  A boolean value.
-   * 	If false (default), then it outputs in one line (laconic mode).
-   * 	Otherwise it emits one line per item (verbose mode).
-   * @return {string} The string with decoded parameters.
-   * @customfunction
-   */
-function D01HUMAN(range, multiline) {
-	multiline = multiline ? true : false;
-
-	// to-do
-
-	return "D01HUMAN: to-do";
+	return "HUMAN: to-do";
 }
 
 /**
@@ -50,8 +33,8 @@ function D01HUMAN(range, multiline) {
    * @return {string} The order code 114C.
    * @customfunction
    */
-function MAKEC114(unit, immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options) {
-	return "MAKEC114: to-do";
+function MAKE114C(unit, immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options) {
+	return "MAKE114C: to-do";
 }
 
 /**
@@ -74,41 +57,38 @@ function MAKED01(immersLen, mountStyle, processConn, stemStyle, material, headLe
 }
 
 /**
-   * Converts 114C order code to D01 code. Some options may be ignored.
-   * @param  {Range}  range  A range containing order code strings of 114C thermowells.
+   * Recognize order codes (what is a model) and converts to D01 code. Some options may be ignored.
+   * @param  {Range}  range  A range containing order code strings.
    * @return {string} The order code D01.
    * @customfunction
    */
-function C114TOD01(range) {
-	return "C114TOD01: to-do";
+function TOD01(range) {
+	return "TOD01: to-do";
 }
 
 /**
-   * Converts D01 order code to 0096 format. Some options may be ignored.
-   * @param  {Range}  range  A range containing order code strings of D01 thermowell.
+   * Recognize order codes (what is a model) and converts to 114C code. Some options may be ignored.
+   * @param  {Range}  range  A range containing order code strings.
    * @return {string} The order code 114C.
    * @customfunction
    */
-function D01TOC114(range) {
-	return "D01TOC114: to-do";
+function TO114C(range) {
+	return "TO114C: to-do";
 }
 	
 /**
- * Converts D01 order code to 0096 format.
- * @param  {Range}  range  A range containing order code strings of D01 thermowell.
+ * Recognize order codes (what is a model) and converts to 0096 code. Some options may be ignored.
+ * @param  {Range}  range  A range containing order code strings.
  * @return {string} The order code in 0096 format.
  * @customfunction
  */
-function D01TOD96(range) {
-	return "D01TOD96: to-do";
+function TO0096(range) {
+	return "TO0096: to-do";
 }
 
-/**
-   * Converts 0096 order code to D01 format.
-   * @param  {Range}  range  A range containing order code strings of 0096 format.
-   * @return {string} Order code of D01 thermowell.
-   * @customfunction
-   */
-function D96TOD01(range) {
-	return "D96TOD01: to-do";
+function test_HUMAN() {
+	const code = "114CM0085TDA2SG040ETR";
+	// to-do
+	Logger.log(code);
 }
+  
