@@ -136,7 +136,7 @@ Parameters:
   `316`; `316L`; `316Ti`; `316 tantalum` (with tantalum sheath); `321`;
   `alloy 20`; `alloy 400`; `alloy 600`; `alloy B`; `alloy C`;
   `carbon steel`; `chrome-moly F11`; `chrome-moly F22`;
-  `molybednum`; `nickel 200`; `special`; `titanium`;
+  `molybdenum`; `nickel 200`; `special`; `titanium`;
 - `headLen` - Head "T" length.
 - `instrConn` - Instrument connection "N". One of:
   + `M18x1.5`;
