@@ -1,10 +1,10 @@
 class ThermowellParser {
 
-	static ThermowellModels = {
-		model114C: "114C",
-		modelD01: "D01",
-		model0096: "0096",
-		modelUnknown: ""
+	static models = {
+		M_114C: "114C",
+		M_D01: "D01",
+		M_0096: "0096",
+		M_UNKNOWN: "",
 	}
 
 	/*
@@ -16,13 +16,13 @@ class ThermowellParser {
 	static detectModel(code) {
 		switch (true) {
 			case !!code.match(/^\s*114/i):
-				return ThermowellParser.ThermowellModels.model114C;
+				return this.models.M_114C;
 			case !!code.match(/^\s*D0*1/i):
-				return ThermowellParser.ThermowellModels.modelD01;
+				return this.models.M_D01;
 			case !!code.match(/^\s*0*96/i):
-				return ThermowellParser.ThermowellModels.model0096;
+				return this.models.M_0096;
 			default:
-				return ThermowellParser.ThermowellModels.modelUnknown;
+				return this.models.M_UNKNOWN;
 		}
 	}
 
@@ -49,7 +49,7 @@ class ThermowellParser {
 	static parseOptions(optString) {
 		const reOptions = /[A-Z]{1,2}\d*/ig;
 		const strOptions = optString?.match(reOptions) ?? [];
-		return strOptions.map(ThermowellParser.parseOption);
+		return strOptions.map(this.parseOption);
 	}
 
 	/**
@@ -59,12 +59,38 @@ class ThermowellParser {
 	 * @return {object}        Parsed parameters or null if cannot parse.
 	 */
 	static parse114C(code) {
-		const reMain = /(?<model>114C) *(?<unit>.) *(?<immerLen>....) *(?<mntTyp>.) *(?<procConn>..) *(?<stemStyle>.) *(?<mater>..) *(?<headLen>...) *(?<instrCon>.) *(?<opts>.*)/i;
-		const mainParams = code.match(reMain);
+		const delim = "(\\s|[-_.,])*";
+		const mainParams = code.match(new RegExp(
+			`(?<model>114C)${delim}` +
+			`(?<unit>\\w)${delim}` +
+			`(?<immerLen>\\d\\d\\d\\d)${delim}` +
+			`(?<mntTyp>\\w)${delim}` +
+			`(?<procConn>\\w\\w)${delim}` +
+			`(?<stemStyle>\\w)${delim}` +
+			`(?<mater>\\w\\w)${delim}` +
+			`(?<headLen>\\d\\d\\d)${delim}` +
+			`(?<instrCon>\\w)${delim}` +
+			`(?<opts>.*)`, "i"));
 		if (!mainParams) return null;
-		const optionsList = ThermowellParser.parseOptions(mainParams.groups.opts);
+		const optionsList = this.parseOptions(mainParams.groups.opts);
 		delete mainParams.groups.opts;
 		return { ...mainParams?.groups, optionsList };
+	}
+
+	/*
+	 * Parse any thermowell order code.
+	 *
+	 * @param  {string}  code  An order code.
+	 * @return {string}  Parsed parameters or null if cannot parse.
+	 */
+	static parse(code) {
+		const model = this.detectModel(code);
+		switch (model) {
+			case this.models.M_114C:
+				return this.parse114C(code);
+			default:
+				throw new Error(`Model ${model} is not implemented.`);
+		}
 	}
 }
 

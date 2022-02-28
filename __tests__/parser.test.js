@@ -4,42 +4,42 @@ describe("Detection of model", () => {
 
 	test("D01", () => {
 		const input = "D01D5CT46ADN000";
-		const want = parser.ThermowellModels.modelD01;
+		const want = parser.models.M_D01;
 		const got = parser.detectModel(input);
 		expect(got).toBe(want);
 	});
 
 	test("114C", () => {
 		const input = "  114CM0355VAR1SC100AWR5C02Q5R16R60TR \ Re";
-		const want = parser.ThermowellModels.model114C;
+		const want = parser.models.M_114C;
 		const got = parser.detectModel(input);
 		expect(got).toBe(want);
 	});
 
 	test("0096", () => {
 		const input = "096-Y-0350-T98";
-		const want = parser.ThermowellModels.model0096;
+		const want = parser.models.M_0096;
 		const got = parser.detectModel(input);
 		expect(got).toBe(want);
 	});
 
 	test("bad D01", () => {
 		const input = "thermowell D01D5CT46ADN000";
-		const want = parser.ThermowellModels.modelUnknown;
+		const want = parser.models.M_UNKNOWN;
 		const got = parser.detectModel(input);
 		expect(got).toBe(want);
 	});
 
 	test("bad 114C", () => {
 		const input = "ll4CM0355VAR1SC100AWR5C02Q5R16R60TR \ Re";
-		const want = parser.ThermowellModels.modelUnknown;
+		const want = parser.models.M_UNKNOWN;
 		const got = parser.detectModel(input);
 		expect(got).toBe(want);
 	});
 	
 	test("bad 0096", () => {
 		const input = "009b-Y-0350-T98";
-		const want = parser.ThermowellModels.modelUnknown;
+		const want = parser.models.M_UNKNOWN;
 		const got = parser.detectModel(input);
 		expect(got).toBe(want);
 	});
@@ -72,7 +72,7 @@ describe("Parsing option list", () => {
 describe("Parsing 114C", () => {
 
 	test("Parsing 114C without options", () => {
-		const input = "114C M 0355VAR1SC100A";
+		const input = "114C_ - M 0355V-AR1SC100A";
 		const got = parser.parse114C(input)
 		const want = {
 			model: '114C',
@@ -90,8 +90,8 @@ describe("Parsing 114C", () => {
 	});
 
 	test("Parsing 114C with options", () => {
-		const input = "114CM0355VAR1SC100AWR5C02Q5R16R60TR \ ";
-		const got = parser.parse114C(input)
+		const input = "114CM0355VAR1SC100A - WR5C02Q5 ,R16R60TR \ ";
+		const got = parser.parse(input)
 		const want = {
 			model: '114C',
 			unit: 'M',
