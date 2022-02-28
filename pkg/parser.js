@@ -1,11 +1,11 @@
-const ThermowellModels = {
-	model114C: "114C",
-	modelD01: "D01",
-	model0096: "0096",
-	modelUnknown: ""
-}
+module.exports = class ThermowellParser {
 
-class ThermowellParser {
+	static ThermowellModels = {
+		model114C: "114C",
+		modelD01: "D01",
+		model0096: "0096",
+		modelUnknown: ""
+	}
 
 	/*
 	 * Detects thermowell model.
@@ -16,13 +16,13 @@ class ThermowellParser {
 	static detectModel(code) {
 		switch (true) {
 			case !!code.match(/^\s*114/i):
-				return ThermowellModels.model114C;
+				return ThermowellParser.ThermowellModels.model114C;
 			case !!code.match(/^\s*D0*1/i):
-				return ThermowellModels.modelD01;
+				return ThermowellParser.ThermowellModels.modelD01;
 			case !!code.match(/^\s*0*96/i):
-				return ThermowellModels.model0096;
+				return ThermowellParser.ThermowellModels.model0096;
 			default:
-				return ThermowellModels.modelUnknown;
+				return ThermowellParser.ThermowellModels.modelUnknown;
 		}
 	}
 
@@ -66,9 +66,4 @@ class ThermowellParser {
 		delete mainParams.groups.opts;
 		return { ...mainParams?.groups, optionsList };
 	}
-}
-
-module.exports = {
-	ThermowellModels,
-	ThermowellParser
 }
