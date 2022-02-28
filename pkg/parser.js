@@ -1,4 +1,4 @@
-module.exports = class ThermowellParser {
+class ThermowellParser {
 
 	static ThermowellModels = {
 		model114C: "114C",
@@ -67,3 +67,5 @@ module.exports = class ThermowellParser {
 		return { ...mainParams?.groups, optionsList };
 	}
 }
+
+module.exports = ThermowellParser;

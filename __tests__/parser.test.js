@@ -72,7 +72,7 @@ describe("Parsing option list", () => {
 describe("Parsing 114C", () => {
 
 	test("Parsing 114C without options", () => {
-		const input = "114CM0355VAR1SC100A";
+		const input = "114C M 0355VAR1SC100A";
 		const got = parser.parse114C(input)
 		const want = {
 			model: '114C',

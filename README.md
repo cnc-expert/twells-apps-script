@@ -76,12 +76,12 @@ Parameters:
   `alloy C-276`;
   `alloy F44 Mo6`;
   `carbon steel`;
-  `chrome-moly: B-11 & F-11` (stem & flange);
-  `chrome-moly: B-22 & F-22` (stem & flange);
-  `chrome-moly: F-91`;
+  `Cr-Mo: B-11 & F-11` (stem & flange);
+  `Cr-Mo: B-22 & F-22` (stem & flange);
+  `Cr-Mo: F-91`;
   `duplex 2205`; `duplex 2205 NORSOK`;
-  `molybdenum`; `nickel 200`;
-  `super duplex`; `super duplex NORSOK`; `titan grade 2`.
+  `Mo` (for molybdenum); `Ni` (for nickel 200);
+  `super duplex`; `super duplex NORSOK`; `Ti` (for titan grade 2).
 - `headLen` - Head "H" length.
 - `instrConn` - Instrument connection "N". One of:
   - `1/2-14 ANPT`;
@@ -132,11 +132,19 @@ Parameters:
 - `stemStyle` - Stem form: `straight`, `tapered` or `stepped`.
 - `material` - Thermowell material. One of:
 
-  `304`; `304L`; `304 teflon` (with PFA coating); `310`;
-  `316`; `316L`; `316Ti`; `316 tantalum` (with tantalum sheath); `321`;
-  `alloy 20`; `alloy 400`; `alloy 600`; `alloy B`; `alloy C`;
-  `carbon steel`; `chrome-moly F11`; `chrome-moly F22`;
-  `molybdenum`; `nickel 200`; `special`; `titanium`;
+  `304`; `304L`; `304 PTFE` (with teflon coating); `310`;
+  `316`; `316L`; `316L PFA`; (with PFA coating);
+  `316Ti`; `316 tantalum` (with tantalum sheath); `321`;
+  `alloy 20`;
+  `alloy 400`; `alloy 400 & 304` (stem & flange);
+  `alloy 600`; `alloy 600 & 304` (stem & flange);
+  `alloy B`;
+  `alloy C`; `alloy C-4 & 304` (stem & flange);
+  `alloy C-22 & 304` (stem & flange);
+  `alloy C-22 & 316L` (stem & flange);
+  `carbon steel`; `Cr-Mo: F11`; `Cr-Mo: F22`; `Cr-Mo: F-91`; `duplex 2205`;
+  `Mo` (for molybdenum); `Ni` (for nickel 200);
+  `special`; `super duplex`; `Ti` (for titan grade 2);
 - `headLen` - Head "T" length.
 - `instrConn` - Instrument connection "N". One of:
   + `M18x1.5`;
