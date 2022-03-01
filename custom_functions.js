@@ -10,11 +10,21 @@
    * @customfunction
    */
 function HUMAN(range, multiline) {
-	multiline = multiline ? true : false;
-
-	// to-do
-
-	return "HUMAN: to-do";
+	const range_ = SpreadsheetApp.getActiveRange();
+	const values = range_.getValues();
+	for (let i = 0; i < values.length; i++) {
+		for (let j = 0; j < values[i].length; j++) {
+			const parsed = ThermowellParser.parse(values[i][j]);
+			const repr = {
+				[ThermowellParser.models.M_114C]: CommonRepr.represent114C(parsed),
+			}[parsed.model];
+			values[i][j] = repr.toString();
+			if (multiline) {
+				return repr.verboseDescription();
+			}
+		}
+	}
+	return values;
 }
 
 /**

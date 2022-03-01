@@ -25,6 +25,21 @@ class ThermowellParser {
 				return this.models.M_UNKNOWN;
 		}
 	}
+	
+	/*
+	 * Parse any thermowell order code.
+	 *
+	 * @param  {string}  code  An order code.
+	 * @return {string}  Parsed parameters or null if cannot parse.
+	 */
+	static parse(code) {
+		const model = this.detectModel(code);
+		let parsed = {
+			[this.models.M_114C]: this.parse114C(code),
+		}[model];
+		if (parsed) parsed.model = model;
+		return parsed;
+	}
 
 	/**
 	 * Parse an option.
@@ -56,7 +71,7 @@ class ThermowellParser {
 	 * Parse 114C code order.
 	 * 
 	 * @param  {string}  code  Order code of the thermowell.
-	 * @return {object}        Parsed parameters or null if cannot parse.
+	 * @return {object}  Parsed parameters or null if cannot parse.
 	 */
 	static parse114C(code) {
 		const delim = "(\\s|[-_.,])*";
@@ -77,21 +92,6 @@ class ThermowellParser {
 		return { ...mainParams?.groups, options };
 	}
 
-	/*
-	 * Parse any thermowell order code.
-	 *
-	 * @param  {string}  code  An order code.
-	 * @return {string}  Parsed parameters or null if cannot parse.
-	 */
-	static parse(code) {
-		const model = this.detectModel(code);
-		switch (model) {
-			case this.models.M_114C:
-				return this.parse114C(code);
-			default:
-				throw new Error(`Model ${model} is not implemented.`);
-		}
-	}
 }
 
 module.exports = ThermowellParser;
