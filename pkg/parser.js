@@ -67,14 +67,14 @@ class ThermowellParser {
 			`(?<mntTyp>\\w)${delim}` +
 			`(?<procConn>\\w\\w)${delim}` +
 			`(?<stemStyle>\\w)${delim}` +
-			`(?<mater>\\w\\w)${delim}` +
+			`(?<material>\\w\\w)${delim}` +
 			`(?<headLen>\\d\\d\\d)${delim}` +
-			`(?<instrCon>\\w)${delim}` +
+			`(?<instrConn>\\w)${delim}` +
 			`(?<opts>.*)`, "i"));
 		if (!mainParams) return null;
-		const optionsList = this.parseOptions(mainParams.groups.opts);
+		const options = this.parseOptions(mainParams.groups.opts);
 		delete mainParams.groups.opts;
-		return { ...mainParams?.groups, optionsList };
+		return { ...mainParams?.groups, options };
 	}
 
 	/*

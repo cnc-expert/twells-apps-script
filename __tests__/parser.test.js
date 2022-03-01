@@ -81,10 +81,10 @@ describe("Parsing 114C", () => {
 			mntTyp: 'V',
 			procConn: 'AR',
 			stemStyle: '1',
-			mater: 'SC',
+			material: 'SC',
 			headLen: '100',
-			instrCon: 'A',
-			optionsList: []
+			instrConn: 'A',
+			options: []
 		};
 		expect(got).toEqual(want);
 	});
@@ -99,10 +99,10 @@ describe("Parsing 114C", () => {
 			mntTyp: 'V',
 			procConn: 'AR',
 			stemStyle: '1',
-			mater: 'SC',
+			material: 'SC',
 			headLen: '100',
-			instrCon: 'A',
-			optionsList: [
+			instrConn: 'A',
+			options: [
 				{ sym: 'WR', num: 5 },
 				{ sym: 'C', num: 2 },
 				{ sym: 'Q', num: 5 },
