@@ -10,7 +10,7 @@ class CommonRepr {
 			MM: "mm",
 			INCH: "inch",
 		},
-		mountType: {
+		mountStyle: {
 			THREADED:    "threaded",
 			FLANGE:      "flange",
 			VAN_STONE:   "van stone",
@@ -220,7 +220,7 @@ class CommonRepr {
 			Ni: "nickel 200",
 			superDuplex: "super duplex",
 			superDuplex_NORSOK: "super duplex NORSOK",
-			spicial: "special",
+			special: "special",
 			Ti: "titan grade 2",
 		}
 	}
@@ -241,11 +241,37 @@ class CommonRepr {
 		commonRepr.immersionLen = +parsedObj.immerLen;
 		commonRepr.style = this.decode.M_114C.style(parsedObj.mountStyle);
 		commonRepr.options.flangeType = this.decode.M_114C.flangeType(parsedObj.mountStyle);
-		commonRepr.procConn = this.decode.M_114C.procConn(commonRepr.type, parsedObj.procConn);
+		commonRepr.procConn = this.decode.M_114C.procConn(commonRepr.style, parsedObj.procConn);
 		commonRepr.stemStyle = this.decode.M_114C.stemStyle(parsedObj.stemStyle);
 		commonRepr.material = this.decode.M_114C.material(parsedObj.material);
 		commonRepr.headLen = +parsedObj.headLen;
 		commonRepr.instrConn = this.decode.M_114C.instrConn(parsedObj.instrConn);
+		return commonRepr;
+	}
+
+	/**
+	 * Build common representation object of parsed D01 order code.
+	 * 
+	 * @param  {object}  parsedObj  Parsed object.
+	 * @return {object}  A common representation object.
+	 */
+	 static representD01(parsedObj) {
+		const commonRepr = new this();
+
+		commonRepr.options = { optSet: parsedObj.optSet };  // to-do
+		
+		commonRepr.model = this.params.model.M_D01;
+		commonRepr.unit = this.params.dimUnit.MM;
+		// to-do:
+		// commonRepr.immersionLen = +parsedObj.immerLen;
+		// commonRepr.style = this.decode.M_D01.style(parsedObj.mountStyle);
+		commonRepr.options.flangeType = this.params.mountFlange.type.PART_WELD;
+		// commonRepr.procConn = this.decode.M_D01.procConn(commonRepr.style, parsedObj.procConn);
+		// commonRepr.stemStyle = this.decode.M_D01.stemStyle(parsedObj.stemStyle);
+		commonRepr.material = this.decode.M_D01.material(parsedObj.material);
+		// commonRepr.headLen = +parsedObj.headLen;
+		commonRepr.instrConn = this.decode.M_D01.instrConn(parsedObj.instrConn);
+
 		return commonRepr;
 	}
 
@@ -257,14 +283,14 @@ class CommonRepr {
 			}[str]),
 
 			style: (str) => ({
-				T: this.params.mountType.THREADED,
-				P: this.params.mountType.FLANGE,
-				F: this.params.mountType.FLANGE,
-				G: this.params.mountType.FLANGE,
-				E: this.params.mountType.FLANGE,
-				V: this.params.mountType.VAN_STONE,
-				W: this.params.mountType.SOCKET_WELD,
-				D: this.params.mountType.WELD_IN,
+				T: this.params.mountStyle.THREADED,
+				P: this.params.mountStyle.FLANGE,
+				F: this.params.mountStyle.FLANGE,
+				G: this.params.mountStyle.FLANGE,
+				E: this.params.mountStyle.FLANGE,
+				V: this.params.mountStyle.VAN_STONE,
+				W: this.params.mountStyle.SOCKET_WELD,
+				D: this.params.mountStyle.WELD_IN,
 			}[str]),
 
 			flangeType: (str) => ({
@@ -417,15 +443,15 @@ class CommonRepr {
 
 			procConn: (type, procConnCode) => {
 				switch (type) {
-					case this.params.mountType.THREADED:
+					case this.params.mountStyle.THREADED:
 						return this.decode.M_114C.procConnOfThreaded(procConnCode);
-					case this.params.mountType.FLANGE:
+					case this.params.mountStyle.FLANGE:
 						return this.decode.M_114C.procConnOfFlange(procConnCode);
-					case this.params.mountType.VAN_STONE:
+					case this.params.mountStyle.VAN_STONE:
 						return this.decode.M_114C.procConnOfVanStone(procConnCode);
-					case this.params.mountType.SOCKET_WELD:
+					case this.params.mountStyle.SOCKET_WELD:
 						return this.decode.M_114C.procConnOfSocketWeld(procConnCode);
-					case this.params.mountType.WELD_IN:
+					case this.params.mountStyle.WELD_IN:
 						return this.decode.M_114C.procConnOfWeldIn(procConnCode);
 					default:
 						return null;
@@ -495,7 +521,49 @@ class CommonRepr {
 			}[str]),
 		},
 
-		M_D01: {},  // to-do
+		M_D01: {
+			
+			material: (str) => ({
+				B: this.params.material.SST_304,
+				E: this.params.material.SST_304L,
+				M: this.params.material.SST_304_PTFE,
+				V: this.params.material.SST_310,
+				A: this.params.material.SST_316,
+				D: this.params.material.SST_316L,
+				U: this.params.material.SST_316_TANTALUM,
+				Y: this.params.material.SST_316Ti,
+				W: this.params.material.SST_321,
+				F: this.params.material.alloy20,
+				G: this.params.material.alloy400,
+				H: this.params.material.alloy600,
+				L: this.params.material.alloyB,
+				J: this.params.material.alloyС276,
+				C: this.params.material.carbon,
+				Z: this.params.material.CrMo_B11_F11,
+				P: this.params.material.CrMo_B22_F22,
+				K: this.params.material.Mo,
+				R: this.params.material.Ni,
+				X: this.params.material.special,
+				T: this.params.material.Ti,
+			}[str]),
+
+			instrConn: (str) => ({
+				A: this.params.mountThread.parallelThr.M24x15,
+				B: this.params.mountThread.taperedThr.BSPT05,
+				C: this.params.mountThread.parallelThr.BSPF05,
+				D: this.params.mountThread.taperedThr.ANPT05,
+				E: this.params.mountThread.taperedThr.API05,
+				F: this.params.mountThread.parallelThr.BSPF075,
+				J: this.params.mountThread.parallelThr.M20x15,
+				K: this.params.mountThread.parallelThr.M27x15,
+				L: this.params.mountThread.parallelThr.M22x15,
+				M: this.params.mountThread.parallelThr.M24x2,
+				P: this.params.mountThread.parallelThr.NPSM05,
+				R: this.params.mountThread.taperedThr.NPT075,
+				T: this.params.mountThread.parallelThr.M18x15,
+			}[str]),
+		},
+
 		M_0096: {}, // to-do
 	}
 

@@ -84,7 +84,7 @@ describe("Parsing 114C", () => {
 			material: 'SC',
 			headLen: '100',
 			instrConn: 'A',
-			options: []
+			options: [],
 		};
 		expect(got).toEqual(want);
 	});
@@ -108,9 +108,53 @@ describe("Parsing 114C", () => {
 				{ sym: 'Q', num: 5 },
 				{ sym: 'R', num: 16 },
 				{ sym: 'R', num: 60 },
-				{ sym: 'TR', num: 0 }
-			]
+				{ sym: 'TR', num: 0 },
+			],
 		};
 		expect(got).toEqual(want);
 	});
+});
+
+
+
+describe("Parsing D01", () => {
+
+	test("Parsing D01", () => {
+		const input = "D01Y6JT26KDN000 \ Rev.BV 0096-Y-0455-T26";
+		const got = parser.parse(input)
+		const want = {
+			model: 'D01',
+			material: 'Y',
+			immerLen: '6J',
+			mountStyle: 'T26',
+			headLen: 'K',
+			instrConn: 'D',
+			optSet: '000',
+		};
+		expect(got).toEqual(want);
+	});
+
+
+	console.log(parser.parse("D01D5CT98KDN000"));  // to-do: remove
+});
+
+
+
+describe("Parsing 0096", () => {
+
+	test("Parsing 0096", () => {
+		const input = "0096-Y-0210-T98 T040-J";
+		const got = parser.parse(input)
+		const want = {
+			model: '0096',
+			material: 'Y',
+			immerLen: '0210',
+			mountStyle: 'T98',
+			headLen: '040',
+			instrConn: 'J',
+			options: [],
+		};
+		expect(got).toEqual(want);
+	});
+
 });
