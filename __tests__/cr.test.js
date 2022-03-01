@@ -9,6 +9,7 @@ describe("Common representation", () => {
 		const got = repr.represent114C(input);
 		console.log(got);
 		console.log(got.toString());
+		console.log(got.verboseDescription());
 		//expect(got).toEqual(want);
 	});
 

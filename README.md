@@ -61,16 +61,16 @@ Parameters:
 - `stemStyle` - Stem form: `straight`, `tapered` or `stepped`.
 - `material` - Thermowell material. One of:
 
-  `304` or `304L`; `304 PTFE` or `304L PTFE` (with teflon coating); `310`;
-  `316` or `316L`; `316 NORSOK` or `316L NORSOK` (NORSOK standards);
+  `304/304L`; `304/304L PTFE` (with teflon coating); `310`;
+  `316/316L`; `316/316L NORSOK` (NORSOK standards);
   `316Ti`;
-  `316 tantalum`  or `316L tantalum` (with tantalum sheath);
-  `316 PFA` or `316L PFA` (with PFA coating);
+  `316/316L tantalum` (with tantalum sheath);
+  `316/316L PFA` (with PFA coating);
   `321`; `321H`; `347`; `904L`;
   `alloy 20`; `alloy 400`; `alloy 400 & 304/304L` (stem & flange);
   `alloy 600`; `alloy 600 & 304/304L` (stem & flange);
   `alloy 601`; `alloy 625`;
-  `alloy 800`; `alloy 800H` or `alloy 800HT`; `alloy 825`;
+  `alloy 800`; `alloy 800H/800HT`; `alloy 825`;
   `alloy B3`;
   `alloy C-4 & 304/304L` (stem & flange);
   `alloy C-22`; `alloy C-22 & 304/304L` (stem & flange);

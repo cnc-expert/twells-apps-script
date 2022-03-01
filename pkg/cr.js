@@ -499,7 +499,25 @@ class CommonRepr {
 		M_0096: {}, // to-do
 	}
 
+	toString() {
+		return `${this.model} | ${this.unit} | ${this.type} | ` +
+			`U=${this.immersionLen} | ${this.procConn} | ${this.stemStyle} | ` +
+			`${this.material} | H=${this.headLen} | ${this.instrConn}`;
+	}
 
+	verboseDescription() {
+		return [
+			["model", this.model],
+			["unit", this.unit],
+			["mounting style", this.type],
+			["immersion length", this.immersionLen],
+			["process connection", this.procConn],
+			["stem style", this.stemStyle],
+			["material", this.material],
+			["head length", this.headLen],
+			["instr connection", this.instrConn],
+		];
+	}
 }
 
 module.exports = CommonRepr;
