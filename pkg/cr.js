@@ -239,8 +239,8 @@ class CommonRepr {
 		commonRepr.model = this.params.model.M_114C;
 		commonRepr.unit = this.decode.M_114C.unit(parsedObj.unit);
 		commonRepr.immersionLen = +parsedObj.immerLen;
-		commonRepr.type = this.decode.M_114C.type(parsedObj.mntTyp);
-		commonRepr.options.flangeType = this.decode.M_114C.flangeType(parsedObj.mntTyp);
+		commonRepr.style = this.decode.M_114C.style(parsedObj.mountStyle);
+		commonRepr.options.flangeType = this.decode.M_114C.flangeType(parsedObj.mountStyle);
 		commonRepr.procConn = this.decode.M_114C.procConn(commonRepr.type, parsedObj.procConn);
 		commonRepr.stemStyle = this.decode.M_114C.stemStyle(parsedObj.stemStyle);
 		commonRepr.material = this.decode.M_114C.material(parsedObj.material);
@@ -256,7 +256,7 @@ class CommonRepr {
 				E: this.params.dimUnit.INCH,
 			}[str]),
 
-			type: (str) => ({
+			style: (str) => ({
 				T: this.params.mountType.THREADED,
 				P: this.params.mountType.FLANGE,
 				F: this.params.mountType.FLANGE,
@@ -500,7 +500,7 @@ class CommonRepr {
 	}
 
 	toString() {
-		return `${this.model} | ${this.unit} | ${this.type} | ` +
+		return `${this.model} | ${this.unit} | ${this.style} | ` +
 			`U=${this.immersionLen} | ${this.procConn} | ${this.stemStyle} | ` +
 			`${this.material} | H=${this.headLen} | ${this.instrConn}`;
 	}
@@ -509,7 +509,7 @@ class CommonRepr {
 		return [
 			["model", this.model],
 			["unit", this.unit],
-			["mounting style", this.type],
+			["mounting style", this.style],
 			["immersion length", this.immersionLen],
 			["process connection", this.procConn],
 			["stem style", this.stemStyle],
