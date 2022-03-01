@@ -1,12 +1,5 @@
 class ThermowellParser {
 
-	static models = {
-		M_114C: "114C",
-		M_D01: "D01",
-		M_0096: "0096",
-		M_UNKNOWN: "",
-	}
-
 	/*
 	 * Detects thermowell model.
 	 *
@@ -137,5 +130,12 @@ class ThermowellParser {
 		return { ...mainParams.groups, options };
 	}
 }
+
+ThermowellParser.models = {
+	M_114C: "114C",
+	M_D01: "D01",
+	M_0096: "0096",
+	M_UNKNOWN: "",
+};
 
 module.exports = ThermowellParser;

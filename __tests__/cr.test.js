@@ -17,9 +17,9 @@ describe("Common representation", () => {
 		const input = parser.parse("D01D5CT98KDN000");
 		// const want = 
 		const got = repr.representD01(input);
-		console.log(got);
-		console.log(got.toString());
-		console.log(got.verboseDescription());
+		// console.log(got);
+		// console.log(got.toString());
+		// console.log(got.verboseDescription());
 		//expect(got).toEqual(want);
 	});
 

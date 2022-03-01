@@ -10,18 +10,16 @@
    * @customfunction
    */
 function HUMAN(range, multiline) {
-	const range_ = SpreadsheetApp.getActiveRange();
-	const values = range_.getValues();
+	const values = Array.isArray(range) ? range : [[range]];
 	for (let i = 0; i < values.length; i++) {
 		for (let j = 0; j < values[i].length; j++) {
 			const parsed = ThermowellParser.parse(values[i][j]);
 			const repr = {
 				[ThermowellParser.models.M_114C]: CommonRepr.represent114C(parsed),
+				[ThermowellParser.models.M_D01]: CommonRepr.representD01(parsed),
 			}[parsed.model];
-			values[i][j] = repr.toString();
-			if (multiline) {
-				return repr.verboseDescription();
-			}
+			if (multiline) return repr ? repr.verboseDescription() : "not implemented yet";
+			values[i][j] = repr ? repr.toString() : "not implemented yet";
 		}
 	}
 	return values;
@@ -96,9 +94,4 @@ function TO0096(range) {
 	return "TO0096: to-do";
 }
 
-function test_HUMAN() {
-	const code = "114CM0085TDA2SG040ETR";
-	// to-do
-	Logger.log(code);
-}
-  
+var module = {}; // GAS doesn't understand CommonJS

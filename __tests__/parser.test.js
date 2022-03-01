@@ -134,8 +134,6 @@ describe("Parsing D01", () => {
 		expect(got).toEqual(want);
 	});
 
-
-	console.log(parser.parse("D01D5CT98KDN000"));  // to-do: remove
 });
 
 
