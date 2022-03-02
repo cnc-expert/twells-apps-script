@@ -7,13 +7,20 @@ function test_HUMAN_() {
 	Logger.log(got);
 }
 
-function rowsAndCols_(range, format) {
+const humanFmt = {
+	STR: 0,
+	COL: 1,
+	ROW: 2,
+	COL_WITH_HEADERS: 3,
+	ROW_WITH_HEADERS: 4,
+}
+
+function rowsAndCols_(range, fmt) {
 	const values = Array.isArray(range) ? range : [[range]];
-	let rows = values.length;
-	let cols = values[0].length;
-	if (format == 1) rows = 1;
-	if (format == 2) cols = 1;
-	if (format == 3 || format == 4) [rows, cols] = [1, 1];
+	const formatsReadingOneRow = [humanFmt.COL, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
+	const formatsReadingOneCol = [humanFmt.ROW, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
+	const rows = formatsReadingOneRow.includes(fmt) ? 1 : values.length;
+	const cols = formatsReadingOneCol.includes(fmt) ? 1 : values[0].length;
 	return { values, rows, cols };
 }
 
@@ -64,11 +71,11 @@ function HUMAN(range, format) {
 			}
 			const repr = reprFunc(parsed);
 
-			if (!format) outArray[r][c] = repr.toString();
-			if (format == 1) addColumnToMatrix_(outArray, repr.columnDescription());
-			if (format == 2) [outArray[r]] = repr.rowDescription();
-			if (format == 3) return repr.columnDescription(true);
-			if (format == 4) return repr.rowDescription(true);
+			if (fmt == humanFmt.STR) outArray[r][c] = repr.toString();
+			if (fmt == humanFmt.COL) addColumnToMatrix_(outArray, repr.columnDescription());
+			if (fmt == humanFmt.ROW) [outArray[r]] = repr.rowDescription();
+			if (fmt == humanFmt.COL_WITH_HEADERS) return repr.columnDescription(true);
+			if (fmt == humanFmt.ROW_WITH_HEADERS) return repr.rowDescription(true);
 		}
 	}
 	return outArray;
