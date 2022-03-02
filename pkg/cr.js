@@ -56,18 +56,16 @@ class CommonRepr {
 			`${this.material} | H=${this.headLen} | ${this.instrConn}`;
 	}
 
-	verboseDescription() {
-		return [
-			["model", this.model],
-			["unit", this.unit],
-			["mounting style", this.style],
-			["immersion length", this.immersionLen],
-			["process connection", this.procConn],
-			["stem style", this.stemStyle],
-			["material", this.material],
-			["head length", this.headLen],
-			["instr connection", this.instrConn],
-		];
+	rowDescription(withHeaders = false) {
+		const headers = [ "model", "unit", "mounting style", "immersion length", "process connection", "stem style", "material", "head length", "instr connection" ];
+		const values = [ this.model, this.unit, this.style, this.immersionLen, this.procConn, this.stemStyle, this.material, this.headLen, this.instrConn ];
+		return withHeaders ? [ headers, values ] : [ values ];
+	}
+
+	columnDescription(withHeaders = false) {
+		const headers = [ "model", "unit", "mounting style", "immersion length", "process connection", "stem style", "material", "head length", "instr connection" ];
+		const values = [ this.model, this.unit, this.style, this.immersionLen, this.procConn, this.stemStyle, this.material, this.headLen, this.instrConn ];
+		return withHeaders ?  headers.map((h, i) => [h, values[i]]) : values.map(v => [v]);
 	}
 }
 

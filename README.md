@@ -6,13 +6,14 @@ Display human readable form of an order code.
 
 Format:
 
-`=HUMAN(range, multiline)`
+`=HUMAN(range, format)`
 
 where:
 
 - `range` - A range containing order codes.
-- `multiline` - A boolean value. If false (default), then it outputs in one line (laconic mode).
-Otherwise it emits one line per item (verbose mode).
+- `format` - A number. If `0` it returns a string. If `1` - a column range. If `2` - a row range.
+            If `3` - a column range with headers. If `4` - a row range with headers.
+			Last two are calculated only for the first cell of the input `range`.
 
 
 
