@@ -113,4 +113,13 @@ describe("D01: immersion length code", () => {
 		const got = twell.immersionLen;
 		expect(got).toBe(want);
 	});
+
+	test("Irregular: incorrect", () => {
+		const lengthCode = "bO";
+		const input = parser.parse(`D01D${lengthCode}T98KDN000`);
+		const want = undefined;
+		const twell = repr.representD01(input);
+		const got = twell.immersionLen;
+		expect(got).toBe(want);
+	});
 });
