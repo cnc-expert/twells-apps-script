@@ -12,15 +12,15 @@ class CommonRepr {
 		commonRepr.options = parsedObj.options || {}; // to-do
 
 		commonRepr.model = this.params.model.M_114C;
-		commonRepr.unit = this.decode.M_114C.unit(parsedObj.unit);
+		commonRepr.unit = this.decode.R114C.unit(parsedObj.unit);
 		commonRepr.immersionLen = +parsedObj.immerLen;
-		commonRepr.style = this.decode.M_114C.style(parsedObj.mountStyle);
-		commonRepr.options.flangeType = this.decode.M_114C.flangeType(parsedObj.mountStyle);
-		commonRepr.procConn = this.decode.M_114C.procConn(commonRepr.style, parsedObj.procConn);
-		commonRepr.stemStyle = this.decode.M_114C.stemStyle(parsedObj.stemStyle);
-		commonRepr.material = this.decode.M_114C.material(parsedObj.material);
+		commonRepr.style = this.decode.R114C.style(parsedObj.mountStyle);
+		commonRepr.options.flangeType = this.decode.R114C.flangeType(parsedObj.mountStyle);
+		commonRepr.procConn = this.decode.R114C.procConn(commonRepr.style, parsedObj.procConn);
+		commonRepr.stemStyle = this.decode.R114C.stemStyle(parsedObj.stemStyle);
+		commonRepr.material = this.decode.R114C.material(parsedObj.material);
 		commonRepr.headLen = +parsedObj.headLen;
-		commonRepr.instrConn = this.decode.M_114C.instrConn(parsedObj.instrConn);
+		commonRepr.instrConn = this.decode.R114C.instrConn(parsedObj.instrConn);
 		return commonRepr;
 	}
 
@@ -30,22 +30,22 @@ class CommonRepr {
 	 * @param  {object}  parsedObj  Parsed object.
 	 * @return {object}  A common representation object.
 	 */
-	 static representD01(parsedObj) {
+	static representD01(parsedObj) {
 		const commonRepr = new this();
 
 		commonRepr.options = { optSet: parsedObj.optSet };  // to-do
-		
+
 		commonRepr.model = this.params.model.M_D01;
 		commonRepr.unit = this.params.dimUnit.MM;
 		// to-do:
-		// commonRepr.immersionLen = +parsedObj.immerLen;
-		// commonRepr.style = this.decode.M_D01.style(parsedObj.mountStyle);
+		commonRepr.immersionLen = this.decode.D01.immersionLen(parsedObj.immerLen);
+		// commonRepr.style = this.decode.D01.style(parsedObj.mountStyle);
 		commonRepr.options.flangeType = this.params.mountFlange.type.PART_WELD;
-		// commonRepr.procConn = this.decode.M_D01.procConn(commonRepr.style, parsedObj.procConn);
-		// commonRepr.stemStyle = this.decode.M_D01.stemStyle(parsedObj.stemStyle);
-		commonRepr.material = this.decode.M_D01.material(parsedObj.material);
+		// commonRepr.procConn = this.decode.D01.procConn(commonRepr.style, parsedObj.procConn);
+		// commonRepr.stemStyle = this.decode.D01.stemStyle(parsedObj.stemStyle);
+		commonRepr.material = this.decode.D01.material(parsedObj.material);
 		// commonRepr.headLen = +parsedObj.headLen;
-		commonRepr.instrConn = this.decode.M_D01.instrConn(parsedObj.instrConn);
+		commonRepr.instrConn = this.decode.D01.instrConn(parsedObj.instrConn);
 
 		return commonRepr;
 	}
@@ -57,15 +57,15 @@ class CommonRepr {
 	}
 
 	rowDescription(withHeaders = false) {
-		const headers = [ "model", "unit", "mounting style", "immersion length", "process connection", "stem style", "material", "head length", "instr connection" ];
-		const values = [ this.model, this.unit, this.style, this.immersionLen, this.procConn, this.stemStyle, this.material, this.headLen, this.instrConn ];
-		return withHeaders ? [ headers, values ] : [ values ];
+		const headers = ["model", "unit", "mounting style", "immersion length", "process connection", "stem style", "material", "head length", "instr connection"];
+		const values = [this.model, this.unit, this.style, this.immersionLen, this.procConn, this.stemStyle, this.material, this.headLen, this.instrConn];
+		return withHeaders ? [headers, values] : [values];
 	}
 
 	columnDescription(withHeaders = false) {
-		const headers = [ "model", "unit", "mounting style", "immersion length", "process connection", "stem style", "material", "head length", "instr connection" ];
-		const values = [ this.model, this.unit, this.style, this.immersionLen, this.procConn, this.stemStyle, this.material, this.headLen, this.instrConn ];
-		return withHeaders ?  headers.map((h, i) => [h, values[i]]) : values.map(v => [v]);
+		const headers = ["model", "unit", "mounting style", "immersion length", "process connection", "stem style", "material", "head length", "instr connection"];
+		const values = [this.model, this.unit, this.style, this.immersionLen, this.procConn, this.stemStyle, this.material, this.headLen, this.instrConn];
+		return withHeaders ? headers.map((h, i) => [h, values[i]]) : values.map(v => [v]);
 	}
 }
 
@@ -296,7 +296,7 @@ CommonRepr.params = {
 };
 
 CommonRepr.decode = {
-	M_114C: {
+	R114C: {
 		unit: (str) => ({
 			M: CommonRepr.params.dimUnit.MM,
 			E: CommonRepr.params.dimUnit.INCH,
@@ -464,15 +464,15 @@ CommonRepr.decode = {
 		procConn: (type, procConnCode) => {
 			switch (type) {
 				case CommonRepr.params.mountStyle.THREADED:
-					return CommonRepr.decode.M_114C.procConnOfThreaded(procConnCode);
+					return CommonRepr.decode.R114C.procConnOfThreaded(procConnCode);
 				case CommonRepr.params.mountStyle.FLANGE:
-					return CommonRepr.decode.M_114C.procConnOfFlange(procConnCode);
+					return CommonRepr.decode.R114C.procConnOfFlange(procConnCode);
 				case CommonRepr.params.mountStyle.VAN_STONE:
-					return CommonRepr.decode.M_114C.procConnOfVanStone(procConnCode);
+					return CommonRepr.decode.R114C.procConnOfVanStone(procConnCode);
 				case CommonRepr.params.mountStyle.SOCKET_WELD:
-					return CommonRepr.decode.M_114C.procConnOfSocketWeld(procConnCode);
+					return CommonRepr.decode.R114C.procConnOfSocketWeld(procConnCode);
 				case CommonRepr.params.mountStyle.WELD_IN:
-					return CommonRepr.decode.M_114C.procConnOfWeldIn(procConnCode);
+					return CommonRepr.decode.R114C.procConnOfWeldIn(procConnCode);
 				default:
 					return null;
 			}
@@ -542,7 +542,43 @@ CommonRepr.decode = {
 		}[str]),
 	},
 
-	M_D01: {
+	D01: {
+
+		immersionLen: (str) => {
+			const offset = str[0];
+			const base = str[1];
+			const regularLength = (bases, baseLength) => {
+				const lengthStep = 5;
+				const numOfOffsets = 10; // 0...9
+				const baseStep = numOfOffsets * lengthStep;
+				const idx = bases.indexOf(base);
+				return (idx == -1) ? undefined : baseLength + idx * baseStep + offset * lengthStep;
+			}
+			let length =
+				regularLength(["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "R", "T"], 25)
+				|| regularLength(["V", "W", "X", "Y"], 830)
+				|| {
+					"0U": 825,
+					"1U": 2050,
+					"2U": 2060,
+					"3U": 2380,
+					"4U": 2420,
+					"5U": 2710,
+					"6U": 2780,
+					"7U": 2600,
+					"8U": 1525,
+					"9U": 88,
+					"0Z": 1100,
+					"1Z": 1800,
+					"2Z": 1665,
+					"3Z": 2000,
+					"4Z": 1250,
+					"5Z": 1060,
+					"6Z": 1120,
+					"7Z": 1300,
+				}[str];
+			return length;
+		},
 
 		material: (str) => ({
 			B: CommonRepr.params.material.SST_304,
@@ -585,7 +621,7 @@ CommonRepr.decode = {
 		}[str]),
 	},
 
-	M_0096: {}, // to-do
+	R0096: {}, // to-do
 };
 
 module.exports = CommonRepr;

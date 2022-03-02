@@ -1,11 +1,11 @@
 /** @OnlyCurrentDoc */
 
-function test_HUMAN_() {
-	const input1 = [["114CE0110PAC2SC035AA050B040Q76Q73R16Q8Q3", "D01Y4CT95KJN000 Rev.BV 0096-Y-0145-T95", "114CM0110PAC2SC035AA050B040Q76Q73R16Q8Q3"]];
-	const input2 = 1;
-	const got = HUMAN(input1, input2);
-	Logger.log(got);
-}
+// function test_HUMAN_() {
+// 	const input1 = [["114CE0110PAC2SC035AA050B040Q76Q73R16Q8Q3", "D01Y4CT95KJN000 Rev.BV 0096-Y-0145-T95", "114CM0110PAC2SC035AA050B040Q76Q73R16Q8Q3"]];
+// 	const input2 = 1;
+// 	const got = HUMAN(input1, input2);
+// 	Logger.log(got);
+// }
 
 const humanFmt = {
 	STR: 0,
@@ -42,16 +42,16 @@ function addColumnToMatrix_(matrix, column) {
 
 /**
  * Display human readable form of an order code.
- * @param  {any}     range   A range containing order codes.
- * @param  {number}  format  If 0 returns a string.
+ * @param  {any}     range  A range containing order codes.
+ * @param  {number}  fmt    If 0 returns a string.
  *    If 1 returns a column range. If 2 returns a row range.
  *    If 3 returns a column range with headers. If 4 returns a row range with headers.
  *    If format with headers chosen, only first cell of the range processed.
  * @return {string} The string with decoded parameters.
  * @customfunction
  */
-function HUMAN(range, format) {
-	const { values, rows, cols } = rowsAndCols_(range, format);
+function HUMAN(range, fmt) {
+	const { values, rows, cols } = rowsAndCols_(range, fmt);
 	const outArray = [];
 
 	for (let r = 0; r < rows; r++) {

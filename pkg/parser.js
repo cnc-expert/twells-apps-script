@@ -26,12 +26,13 @@ class ThermowellParser {
 	 * @return {string}  Parsed parameters or null if cannot parse.
 	 */
 	static parse(code) {
+		code = code.toUpperCase();
 		const model = this.detectModel(code);
 		const parsed = {
-			[this.models.M_114C]: this.parse114C(code),
-			[this.models.M_D01]: this.parseD01(code),
-			[this.models.M_0096]: this.parse0096(code),
-		}[model];
+			[this.models.M_114C]: this.parse114C,
+			[this.models.M_D01]: this.parseD01,
+			[this.models.M_0096]: this.parse0096,
+		}[model]?.call(this, code);
 		if (parsed) parsed.model = model;
 		return parsed;
 	}
