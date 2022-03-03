@@ -1,5 +1,5 @@
 # twells-apps-script
-Thermowell supporting custom functions for Google Spreadsheet.
+Rosemount's Thermowells supporting custom functions for Google Spreadsheet.
 
 ## HUMAN
 Display human readable form of an order code.
