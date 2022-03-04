@@ -84,7 +84,7 @@ CommonRepr.params = {
 		FLANGE: "flange",
 		VAN_STONE: "van stone",
 		SOCKET_WELD: "socket weld",
-		WELD_IN: "weld-in",  // including DIN 43772
+		WELD_IN: "weld-in",  // including DIN 43772 form 4
 	},
 	mountFlange: {
 		type: {
@@ -185,18 +185,18 @@ CommonRepr.params = {
 	},
 	mountWeld: {
 		pipeSizeInch: {
-			D075: '3/4"',
-			D1: '1"',
-			D125: '1 1/4"',
-			D15: '1 1/2"',
+			D075: '3/4" pipe',
+			D1: '1" pipe',
+			D125: '1 1/4" pipe',
+			D15: '1 1/2" pipe',
 			CUSTOM: "custom",
 		},
 		pipeSizeDIN43772: {
-			DIN_18: "18",
-			DIN_24: "24",
-			DIN_26_12: "26 tip D12,5",
-			DIN_26_15: "26 tip D15",
-			DIN_32: "32",
+			DIN_18: "18 h7",
+			DIN_24: "24 h7",
+			DIN_26_12: "26 h7 tip D12,5",
+			DIN_26_15: "26 h7 tip D15",
+			DIN_32: "32 h11",
 			CUSTOM: "custom",
 		},
 	},

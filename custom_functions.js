@@ -15,7 +15,7 @@ const humanFmt = {
 	ROW_WITH_HEADERS: 4,
 }
 
-function rowsAndCols_(range, fmt) {
+function rowsAndColsOfInputRange_(range, fmt) {
 	const values = Array.isArray(range) ? range : [[range]];
 	const formatsReadingOneRow = [humanFmt.COL, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
 	const formatsReadingOneCol = [humanFmt.ROW, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
@@ -51,7 +51,7 @@ function addColumnToMatrix_(matrix, column) {
  * @customfunction
  */
 function HUMAN(range, fmt) {
-	const { values, rows, cols } = rowsAndCols_(range, fmt);
+	const { values, rows, cols } = rowsAndColsOfInputRange_(range, fmt);
 	const outArray = [];
 
 	for (let r = 0; r < rows; r++) {
@@ -82,7 +82,8 @@ function HUMAN(range, fmt) {
 }
 
 /**
-   * Form an order code for the 114C thermowell.
+   * Form an thermowell order code.
+   * @param  {string}  model        Thermowell model: 114C or D01.
    * @param  {string}  unit         Dimensional unit: mm or inch.
    * @param  {string}  immersLen    Immersion "U" length.
    * @param  {string}  mountStyle   Mounting style.
@@ -94,30 +95,11 @@ function HUMAN(range, fmt) {
    * @param  {string}  options      List of options.
    * 	Separated with any non-letter and non-numeric symbol, or without any separator.
    * 	May be empty.
-   * @return {string} The order code 114C.
+   * @return {string} The order code.
    * @customfunction
    */
-function MAKE114C(unit, immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options) {
-	return "MAKE114C: to-do";
-}
-
-/**
-   * Form an order code for the D01 thermowell.
-   * @param  {string}  immersLen    Immersion "U" length.
-   * @param  {string}  mountStyle   Mounting style.
-   * @param  {string}  processConn  Process connection "P".
-   * @param  {string}  stemStyle    Stem form: straight, tapered or stepped.
-   * @param  {string}  material     Thermowell material.
-   * @param  {string}  headLen      Head "T" length.
-   * @param  {string}  instrConn    Instrument connection "N".
-   * @param  {string}  options      List of options.
-   * 	Separated with any non-letter and non-numeric symbol, or without any separator.
-   * 	May be empty.
-   * @return {string} The order code D01.
-   * @customfunction
-   */
-function MAKED01(immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options) {
-	return "MAKED01: to-do";
+function MAKEWELL(model, unit, immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options) {
+	return "MAKEWELL: to-do";
 }
 
 /**

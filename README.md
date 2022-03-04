@@ -17,152 +17,180 @@ where:
 
 
 
-## MAKE114C
-Form an order code for the 114C thermowell.
+## MAKEWELL
+Form an order code.
 
 Format:
 
-`=MAKE114C(unit, immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options)`
+`=MAKEWELL(model, unit, immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options)`
 
 Parameters:
 
+- `model` - Model: `114C` or `D01`.
+
 - `unit` - Dimensional unit: `mm` or `inch`.
+
 - `immersLen` - Immersion "U" length.
+
 - `mountStyle` - Mounting style. One of:
   - `threaded`;
-  - `flange, partial weld`;
-  - `flange, full weld`;
-  - `flange, forging`;
+  - `flange partial` (partial penetration weld);
+  - `flange full` (full penetration weld);
+  - `flange forging` (single piece forging);
   - `threaded flange`;
   - `van stone`;
   - `socket weld`;
   - `weld-in`.
-- `processConn` - Process connection "P". Now supported:
+
+- `processConn` - Process connection "P":
   - Thread mount thermowells with **tapered thread**:
     - ANPT threads:
-	  `1/2-14 ANPT`; `3/4-14 ANPT`; `1-11.5 ANPT`; `1 1/2-11.5 ANPT`.
-	- Pipe threads:
-	  `R1/2` or `1/2 BSPT`;
-	  `R3/4` or `3/4 BSPT`;
-	  `R1` or `1 BSPT`.
+      `1/2-14 ANPT`; `3/4-14 ANPT`; `1-11.5 ANPT`; `1 1/2-11.5 ANPT`.
+    - Pipe threads:
+      `R1/2` or `1/2 BSPT`;
+      `R3/4` or `3/4 BSPT`;
+      `R1` or `1 BSPT`.
+    - API threads:
+        `1/2 API`, `3/4 API`, `1 API`.
   - Thread mount thermowells with **parallel thread**:
-	- Metric threads:
+    - Metric threads:
       `M20x1.5`, `M24x1.5`, `M27x2`, `M33x2`.
-	- Pipe threads:
-	  `G1/2` or `1/2 BSPF`;
-	  `G3/4` or `3/4 BSPF`;
-	  `G1` or `1 BSPF`.
-  <!-- TO-DO: Flange mount thermowells -->
-  <!-- TO-DO: Flange mount thermowells -->
-  <!-- TO-DO: Threaded flange -->
-  <!-- TO-DO: Van stone / Lap flange thermowells -->
-  <!-- TO-DO: Weld mount thermowells - socket weld -->
-  <!-- TO-DO: Weld mount - weld-in thermowells -->
-  <!-- TO-DO: Weld mount thermowells - DIN form 4 -->
-- `stemStyle` - Stem form: `straight`, `tapered` or `stepped`.
-- `material` - Thermowell material. One of:
+    - Pipe threads:
+      `G1/2` or `1/2 BSPF`;
+      `G3/4` or `3/4 BSPF`;
+      `G1` or `1 BSPF`.
 
-  `304/304L`; `304/304L PTFE` (with teflon coating); `310`;
-  `316/316L`; `316/316L NORSOK` (NORSOK standards);
+  - Flange mount (threaded included) or Van Stone:
+    - ASME flange:
+      `1" class 150`,
+      `1,5" class 150`,
+      `2" class 150`,
+      `3" class 150`,
+      `4" class 150`,
+      `6" class 150`,
+      `3/4" class 300`,
+      `1" class 300`,
+      `1,5" class 300`,
+      `2" class 300`,
+      `1" class 400/600`,
+      `1,5" class 400/600`,
+      `2" class 400/600`,
+      `1" class 900/1500`,
+      `1,5" class 900/1500`,
+      `2" class 900/1500`,
+      `1" class 2500`,
+      `1,5" class 2500`,
+      `2" class 2500`,
+      `3" class 300`,
+      `3" class 400/600`,
+      `3" class 900`,
+      `3" class 1500`,
+      `3" class 2500`.
+    - DIN flange:
+      `DN 20 PN 2.5/6`;
+      `DN 20 PN 10/16/25/40`;
+      `DN 20 PN 63/100`;
+      `DN 25 PN 2.5/6`;
+      `DN 25 PN 10/16/25/40`;
+      `DN 25 PN 63/100`;
+      `DN 40 PN 2.5/6`;
+      `DN 40 PN 10/16/25/40`;
+      `DN 40 PN 63/100`;
+      `DN 50 PN 2.5/6`;
+      `DN 50 PN 10/16`;
+      `DN 50 PN 25/40`;
+      `DN 50 PN 63`;
+      `DN 65 PN 2.5/6`;
+      `DN 65 PN 10/16`;
+      `DN 65 PN 25/40`;
+      `DN 65 PN 63`;
+      `DN 65 PN 100`;
+      `DN 80 PN 2.5/6`;
+      `DN 80 PN 10/16`;
+      `DN 80 PN 25/40`;
+      `DN 80 PN 63`;
+      `DN 80 PN 100`;
+      `DN 100 PN 2.5/6`;
+      `DN 100 PN 10/16`;
+      `DN 100 PN 25/40`;
+      `DN 100 PN 63`.
+
+  - Weld mount (socket weld included):
+    - Inch pipe:
+      `3/4"`; `1"`; `1 1/4"`; `1 1/2"`.
+    - DIN 43772 form 4:
+      `18 h7`; `24 h7`; `26 h7 tip D12,5`; `26 h7 tip D15`; `32 h11`.
+
+- `stemStyle` - Stem form: `straight`, `tapered` or `stepped`.
+
+- `material` - Thermowell material. One of:
+  `304`;
+  `304L`;
+  `304/304L` (any of them);
+  `304 Teflon` (with PTFE coating);
+  `304L Teflon` (with PTFE coating);
+  `304/304L with Teflon coat` (any of them);
+  `310`;
+  `316`;
+  `316L`;
+  `316/316L` (any of them);
+  `316L PFA` (with PFA coating);
+  `316/316L PFA` (any of them, with PFA coating);
+  `316/316L NORSOK` (any of them, according to NORSOK standards);
+  `316 tantalum` (with tantalum sheath);
+  `316/316L tantalum` (any of them, with tantalum sheath);
   `316Ti`;
-  `316/316L tantalum` (with tantalum sheath);
-  `316/316L PFA` (with PFA coating);
-  `321`; `321H`; `347`; `904L`;
-  `alloy 20`; `alloy 400`; `alloy 400 & 304/304L` (stem & flange);
-  `alloy 600`; `alloy 600 & 304/304L` (stem & flange);
-  `alloy 601`; `alloy 625`;
-  `alloy 800`; `alloy 800H/800HT`; `alloy 825`;
+  `321`;
+  `321H`;
+  `347`;
+  `904L`;
+  `alloy 20`;
+  `alloy 400`;
+  `alloy 400 & 304` (stem & flange);
+  `alloy 400 & 304/304L` (stem & flange);
+  `alloy 600`;
+  `alloy 600 & 304` (stem & flange);
+  `alloy 600 & 304/304L` (stem & flange);
+  `alloy 601`;
+  `alloy 625`;
+  `alloy 800`;
+  `alloy 800H/800HT` (any of them);
+  `alloy 825`;
+  `alloy B`;
   `alloy B3`;
-  `alloy C-4 & 304/304L` (stem & flange);
-  `alloy C-22`; `alloy C-22 & 304/304L` (stem & flange);
+  `alloy C-22`;
+  `alloy C-22 & 304` (stem & flange);
+  `alloy C-22 & 304/304L` (stem & flange);
+  `alloy C-22 & 316L` (stem & flange);
   `alloy C-22 & 316/316L` (stem & flange);
-  `alloy C-276`;
+  `alloy С-276`;
+  `alloy C-4 & 304` (stem & flange);
+  `alloy C-4 & 304/304L` (stem & flange);
   `alloy F44 Mo6`;
   `carbon steel`;
-  `Cr-Mo: B-11 & F-11` (stem & flange);
-  `Cr-Mo: B-22 & F-22` (stem & flange);
-  `Cr-Mo: F-91`;
-  `duplex 2205`; `duplex 2205 NORSOK`;
-  `Mo` (for molybdenum); `Ni` (for nickel 200);
-  `super duplex`; `super duplex NORSOK`; `Ti` (for titan grade 2).
+  `CrMo B11 & CrMo F11` (chrome-molybdenum, stem & flange);
+  `CrMo B22 & CrMo F22` (chrome-molybdenum, stem & flange);
+  `CrMo F-91`;
+  `duplex 2205`;
+  `duplex 2205 NORSOK` (according to NORSOK standards);
+  `Mo` (molybdenum);
+  `Ni` (nickel 200);
+  `super duplex`;
+  `super duplex NORSOK` according to NORSOK standards;
+  `Ti` (titanium grade 2).
+
 - `headLen` - Head "H" length.
+
 - `instrConn` - Instrument connection "N". One of:
-  - `1/2-14 ANPT`;
-  - `1/2-14 NPSM`;
-  - `3/4-14 ANPT`;
-  - `M14x1.5`;
-  - `M18x1.5`;
-  - `M20x1.5`;
-  - `M24x1.5`;
-  - `M27x2`;
-  - `G1/2`;
-  - `G3/4`.
-- `options` - List of options. Separated with any non-letter and non-numeric symbol, or without any separator. May be empty.
+  - ANPT and NPT threads:
+    `1/2-14 ANPT`; `3/4-14 ANPT`; `3/4-14 NPT`; `R1/2` or `1/2 BSPT`;
+  - Metric threads:
+    `M14x1.5`; `M18x1.5`; `M20x1.5`; `M22x1.5`; `M24x1.5`; `M24x2`; `M27x1.5`; `M27x2`;
+  - Pipe threads:
+    `G1/2` or `1/2 BSPF`; `G3/4` or `3/4 BSPF`;
+  - Others:
+    `1/2 API`; `1/2-14 NPSM`.
 
-
-
-## MAKED01
-Form an order code for the D01 thermowell.
-
-Format:
-
-`=MAKED01(immersLen, mountStyle, processConn, stemStyle, material, headLen, instrConn, options)`
-
-Parameters:
-
-- `immersLen` - Immersion "U" length.
-- `mountStyle` - Mounting style. One of:
-  - `threaded`;
-  - `flange`;
-  - `weld-in`.
-- `processConn` - Process connection "P". Now supported:
-  - Thread mount thermowells with **tapered thread**:
-    - ANPT threads:
-	  `1/2-14 ANPT`; `3/4-14 ANPT`; `1-11.5 ANPT`.
-	- Pipe threads:
-	  `R1/2` or `1/2 BSPT`;
-	  `R3/4` or `3/4 BSPT`;
-	  `R1` or `1 BSPT`.
-  - Thread mount thermowells with **parallel thread**:
-	- Metric threads:
-      `M20x1.5`, `M24x1.5`, `M27x2`, `M33x2`.
-	- Pipe threads:
-	  `G1/2` or `1/2 BSPF`;
-	  `G3/4` or `3/4 BSPF`;
-	  `G1` or `1 BSPF`.
-  <!-- TO-DO: Weld-in thermowells -->
-  <!-- TO-DO: Flange mount thermowells -->
-- `stemStyle` - Stem form: `straight`, `tapered` or `stepped`.
-- `material` - Thermowell material. One of:
-
-  `304`; `304L`; `304 PTFE` (with teflon coating); `310`;
-  `316`; `316L`; `316L PFA`; (with PFA coating);
-  `316Ti`; `316 tantalum` (with tantalum sheath); `321`;
-  `alloy 20`;
-  `alloy 400`; `alloy 400 & 304` (stem & flange);
-  `alloy 600`; `alloy 600 & 304` (stem & flange);
-  `alloy B`;
-  `alloy C`; `alloy C-4 & 304` (stem & flange);
-  `alloy C-22 & 304` (stem & flange);
-  `alloy C-22 & 316L` (stem & flange);
-  `carbon steel`; `Cr-Mo: F11`; `Cr-Mo: F22`; `Cr-Mo: F-91`; `duplex 2205`;
-  `Mo` (for molybdenum); `Ni` (for nickel 200);
-  `special`; `super duplex`; `Ti` (for titan grade 2);
-- `headLen` - Head "T" length.
-- `instrConn` - Instrument connection "N". One of:
-  + `M18x1.5`;
-  + `M20x1.5`;
-  + `M22x1.5`;
-  + `M24x1.5`;
-  + `M24x2`;
-  + `M27x1.5`;
-  + `1/2 API`.
-  + `1/2-14 ANPT`;
-  + `1/2-14 NPSM`;
-  + `3/4-14 NPT`;
-  + `R1/2` or `1/2 BSPT`;
-  + `G1/2` or `1/2 BSPF`;
-  + `G3/4` or `3/4 BSPF`;
 - `options` - List of options. Separated with any non-letter and non-numeric symbol, or without any separator. May be empty.
 
 
