@@ -121,7 +121,7 @@ class ThermowellParser {
 			`(?<model>0*96)${delim}` +
 			`(?<material>\\w)${delim}` +
 			`(?<immerLen>\\d\\d\\d\\d)${delim}` +
-			`(?<mountStyle>\\w\\w\\w)${delim}` +
+			`(?<mountStyle>\\w\\d\\d)${delim}` +
 			`T(?<headLen>\\d{1,3})${delim}` +
 			`(?<instrConn>\\w)${delim}` +
 			`(?<opts>.*)`, "i"));

@@ -37,12 +37,15 @@ class CommonRepr {
 
 		commonRepr.model = this.params.model.M_D01;
 		commonRepr.unit = this.params.dimUnit.MM;
-		// to-do:
 		commonRepr.immersionLen = this.decode.D01.immersionLen(parsedObj.immerLen);
-		// commonRepr.style = this.decode.D01.style(parsedObj.mountStyle);
+
+		commonRepr.style = this.decode.D01.style(parsedObj.mountStyle);
+		// to-do
+		// const sizeAndStem = this.decode.D01.procConn(commonRepr.style, parsedObj.mountStyle);
+		// commonRepr.procConn = procConnSizeAndStem.procConn;
+		// commonRepr.stemStyle = procConnSizeAndStem.stemStyle;
+
 		commonRepr.options.flangeType = this.params.mountFlange.type.PART_WELD;
-		// commonRepr.procConn = this.decode.D01.procConn(commonRepr.style, parsedObj.procConn);
-		// commonRepr.stemStyle = this.decode.D01.stemStyle(parsedObj.stemStyle);
 		commonRepr.material = this.decode.D01.material(parsedObj.material);
 		// commonRepr.headLen = +parsedObj.headLen;
 		commonRepr.instrConn = this.decode.D01.instrConn(parsedObj.instrConn);
@@ -473,8 +476,6 @@ CommonRepr.decode = {
 					return CommonRepr.decode.R114C.procConnOfSocketWeld(procConnCode);
 				case CommonRepr.params.mountStyle.WELD_IN:
 					return CommonRepr.decode.R114C.procConnOfWeldIn(procConnCode);
-				default:
-					return null;
 			}
 		},
 
@@ -544,27 +545,6 @@ CommonRepr.decode = {
 
 	D01: {
 
-		immersionLen: (str) => {
-			const offset = str[0];
-			const base = str[1];
-			const regularLength = (bases, baseLength) => {
-				const lengthStep = 5;
-				const numOfOffsets = 10; // 0...9
-				const baseStep = numOfOffsets * lengthStep;
-				const idx = bases.indexOf(base);
-				return (idx == -1) ? undefined : baseLength + idx * baseStep + offset * lengthStep;
-			}
-			let length =
-				regularLength(["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "R", "T"], 25)
-				|| regularLength(["V", "W", "X", "Y"], 830)
-				|| {
-					"0U": 825,  "1U": 2050, "2U": 2060, "3U": 2380, "4U": 2420, "5U": 2710,
-					"6U": 2780, "7U": 2600, "8U": 1525, "9U": 88,   "0Z": 1100, "1Z": 1800,
-					"2Z": 1665, "3Z": 2000, "4Z": 1250, "5Z": 1060, "6Z": 1120, "7Z": 1300,
-				}[str];
-			return length;
-		},
-
 		material: (str) => ({
 			B: CommonRepr.params.material.SST_304,
 			E: CommonRepr.params.material.SST_304L,
@@ -587,6 +567,71 @@ CommonRepr.decode = {
 			R: CommonRepr.params.material.Ni,
 			X: CommonRepr.params.material.special,
 			T: CommonRepr.params.material.Ti,
+		}[str]),
+
+		immersionLen: (str) => {
+			const offset = str[0];
+			const base = str[1];
+			const regularLength = (bases, baseLength) => {
+				const lengthStep = 5;
+				const numOfOffsets = 10; // 0...9
+				const baseStep = numOfOffsets * lengthStep;
+				const idx = bases.indexOf(base);
+				return (idx == -1) ? undefined : baseLength + idx * baseStep + offset * lengthStep;
+			}
+			let length =
+				regularLength(["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "R", "T"], 25)
+				|| regularLength(["V", "W", "X", "Y"], 830)
+				|| {
+					"0U": 825,  "1U": 2050, "2U": 2060, "3U": 2380, "4U": 2420, "5U": 2710,
+					"6U": 2780, "7U": 2600, "8U": 1525, "9U": 88,   "0Z": 1100, "1Z": 1800,
+					"2Z": 1665, "3Z": 2000, "4Z": 1250, "5Z": 1060, "6Z": 1120, "7Z": 1300,
+				}[str];
+			return length;
+		},
+
+		style: ([char]) => ({
+			T: CommonRepr.params.mountStyle.THREADED,
+			W: CommonRepr.params.mountStyle.SOCKET_WELD,
+			F: CommonRepr.params.mountStyle.FLANGE,
+			D: CommonRepr.params.mountStyle.FLANGE,
+			E: CommonRepr.params.mountStyle.WELD_IN,
+		}[char]),
+
+		procConn: (procConnCode) => {
+			const type = procConnCode[0];
+			switch (type) {
+				case "T":
+					return CommonRepr.decode.D01.procConnOfThreaded(procConnCode);
+				case "W":
+					return CommonRepr.decode.D01.procConnOfSocketWeld(procConnCode);
+				case "F":
+					return CommonRepr.decode.D01.procConnOfAsmeFlange(procConnCode);
+				case "D":
+					return CommonRepr.decode.D01.procConnOfDinFlange(procConnCode);
+				case "E":
+					return CommonRepr.decode.D01.procConnOfWeldIn(procConnCode);
+			}
+		},
+
+		procConnOfThreaded: (str) => ({
+			// to-do
+		}[str]),
+
+		procConnOfSocketWeld: (str) => ({
+			// to-do
+		}[str]),
+
+		procConnOfAsmeFlange: (str) => ({
+			// to-do
+		}[str]),
+
+		procConnOfDinFlange: (str) => ({
+			// to-do
+		}[str]),
+
+		procConnOfWeldIn: (str) => ({
+			// to-do
 		}[str]),
 
 		instrConn: (str) => ({

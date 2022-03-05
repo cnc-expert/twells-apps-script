@@ -120,7 +120,7 @@ Parameters:
     - Inch pipe:
       `3/4"`; `1"`; `1 1/4"`; `1 1/2"`.
     - DIN 43772 form 4:
-      `18 h7`; `24 h7`; `26 h7 tip D12,5`; `26 h7 tip D15`; `32 h11`.
+      `18 h7`; `24 h7`; `26 h7 tip D12.5`; `26 h7 tip D15`; `32 h11`.
 
 - `stemStyle` - Stem form: `straight`, `tapered` or `stepped`.
 
@@ -184,11 +184,11 @@ Parameters:
 
 - `instrConn` - Instrument connection "N". One of:
   - ANPT and NPT threads:
-    `1/2-14 ANPT`; `3/4-14 ANPT`; `3/4-14 NPT`; `R1/2` or `1/2 BSPT`;
+    `1/2-14 ANPT`; `3/4-14 ANPT`; `3/4-14 NPT`;
   - Metric threads:
     `M14x1.5`; `M18x1.5`; `M20x1.5`; `M22x1.5`; `M24x1.5`; `M24x2`; `M27x1.5`; `M27x2`;
   - Pipe threads:
-    `G1/2` or `1/2 BSPF`; `G3/4` or `3/4 BSPF`;
+    `G1/2` or `1/2 BSPF`; `G3/4` or `3/4 BSPF`; `R1/2` or `1/2 BSPT`;
   - Others:
     `1/2 API`; `1/2-14 NPSM`.
 
