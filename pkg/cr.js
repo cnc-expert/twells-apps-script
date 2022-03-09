@@ -37,17 +37,13 @@ class CommonRepr {
 		commonRepr.model = this.params.model.M_D01;
 		commonRepr.unit = this.params.dimUnit.MM;
 		commonRepr.immersionLen = this.decode.D01.immersionLen(parsedObj.immerLen);
-
 		commonRepr.style = this.decode.D01.style(parsedObj.mountStyle);
-		const sizeAndStem = this.decode.D01.procConn(commonRepr.style, parsedObj.mountStyle);
+		const sizeAndStem = this.decode.D01.procConn(parsedObj.mountStyle);
 		[ commonRepr.procConn, commonRepr.stemStyle ] = sizeAndStem;
 		commonRepr.options = { optSet: parsedObj.optSet };  // to-do
 		commonRepr.options.flangeType = this.params.mountFlange.type.PART_WELD;
-
 		commonRepr.material = this.decode.D01.material(parsedObj.material);
-
-		// to-do
-		// commonRepr.headLen = +parsedObj.headLen;
+		commonRepr.headLen = this.decode.D01.headLen(parsedObj.headLen);
 		commonRepr.instrConn = this.decode.D01.instrConn(parsedObj.instrConn);
 
 		return commonRepr;
@@ -770,6 +766,21 @@ CommonRepr.decode = {
 			E03: [ CommonRepr.params.mountWeld.pipeSizeDIN43772.DIN_24, CommonRepr.params.stemStyle.TAPERED ],
 			E04: [ CommonRepr.params.mountWeld.pipeSizeDIN43772.DIN_24, CommonRepr.params.stemStyle.TAPERED ],
 			E05: [ CommonRepr.params.mountWeld.pipeSizeDIN43772.DIN_24, CommonRepr.params.stemStyle.TAPERED ],
+		}[str]),
+
+		headLen: (str) => ({
+			A: 60,
+			B: 75,
+			C: 100,
+			D: 125,
+			E: 150,
+			F: 175,
+			G: 200,
+			H: 225,
+			J: 80,
+			K: 40,
+			L: 50,
+			M: 135,
 		}[str]),
 
 		instrConn: (str) => ({
