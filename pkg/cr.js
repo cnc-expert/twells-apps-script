@@ -9,18 +9,18 @@ class CommonRepr {
 	static represent114C(parsedObj) {
 		const commonRepr = new this();
 
-		commonRepr.options = parsedObj.options || {}; // to-do
-
 		commonRepr.model = this.params.model.M_114C;
 		commonRepr.unit = this.decode.R114C.unit(parsedObj.unit);
 		commonRepr.immersionLen = +parsedObj.immerLen;
 		commonRepr.style = this.decode.R114C.style(parsedObj.mountStyle);
+		commonRepr.options = parsedObj.options || {}; // to-do
 		commonRepr.options.flangeType = this.decode.R114C.flangeType(parsedObj.mountStyle);
 		commonRepr.procConn = this.decode.R114C.procConn(commonRepr.style, parsedObj.procConn);
 		commonRepr.stemStyle = this.decode.R114C.stemStyle(parsedObj.stemStyle);
 		commonRepr.material = this.decode.R114C.material(parsedObj.material);
 		commonRepr.headLen = +parsedObj.headLen;
 		commonRepr.instrConn = this.decode.R114C.instrConn(parsedObj.instrConn);
+		
 		return commonRepr;
 	}
 
@@ -33,20 +33,20 @@ class CommonRepr {
 	static representD01(parsedObj) {
 		const commonRepr = new this();
 
-		commonRepr.options = { optSet: parsedObj.optSet };  // to-do
 
 		commonRepr.model = this.params.model.M_D01;
 		commonRepr.unit = this.params.dimUnit.MM;
 		commonRepr.immersionLen = this.decode.D01.immersionLen(parsedObj.immerLen);
 
 		commonRepr.style = this.decode.D01.style(parsedObj.mountStyle);
-		// to-do
-		// const sizeAndStem = this.decode.D01.procConn(commonRepr.style, parsedObj.mountStyle);
-		// commonRepr.procConn = procConnSizeAndStem.procConn;
-		// commonRepr.stemStyle = procConnSizeAndStem.stemStyle;
-
+		const sizeAndStem = this.decode.D01.procConn(commonRepr.style, parsedObj.mountStyle);
+		[ commonRepr.procConn, commonRepr.stemStyle ] = sizeAndStem;
+		commonRepr.options = { optSet: parsedObj.optSet };  // to-do
 		commonRepr.options.flangeType = this.params.mountFlange.type.PART_WELD;
+
 		commonRepr.material = this.decode.D01.material(parsedObj.material);
+
+		// to-do
 		// commonRepr.headLen = +parsedObj.headLen;
 		commonRepr.instrConn = this.decode.D01.instrConn(parsedObj.instrConn);
 
@@ -98,38 +98,48 @@ CommonRepr.params = {
 		},
 		size: {
 			ASME: {
-				D1_CLASS150: '1" class 150',
+				D1_CLASS150:  '1" class 150',
 				D15_CLASS150: '1,5" class 150',
-				D2_CLASS150: '2" class 150',
-				D3_CLASS150: '3" class 150',
-				D4_CLASS150: '4" class 150',
-				D6_CLASS150: '6" class 150',
+				D2_CLASS150:  '2" class 150',
+				D3_CLASS150:  '3" class 150',
+				D4_CLASS150:  '4" class 150',
+				D6_CLASS150:  '6" class 150',
 				D075_CLASS300: '3/4" class 300',
-				D1_CLASS300: '1" class 300',
-				D15_CLASS300: '1,5" class 300',
-				D2_CLASS300: '2" class 300',
-				D1_CLASS400_600: '1" class 400/600',
+				D1_CLASS300:   '1" class 300',
+				D15_CLASS300:  '1,5" class 300',
+				D2_CLASS300:   '2" class 300',
+				D1_CLASS400_600:  '1" class 400/600',
 				D15_CLASS400_600: '1,5" class 400/600',
-				D2_CLASS400_600: '2" class 400/600',
-				D1_CLASS900_1500: '1" class 900/1500',
+				D2_CLASS400_600:  '2" class 400/600',
+				D1_CLASS600:  '1" class 600',
+				D15_CLASS600: '1,5" class 600',
+				D2_CLASS600:  '2" class 600',
+				D1_CLASS900_1500:  '1" class 900/1500',
 				D15_CLASS900_1500: '1,5" class 900/1500',
-				D2_CLASS900_1500: '2" class 900/1500',
-				D1_CLASS2500: '1" class 2500',
+				D2_CLASS900_1500:  '2" class 900/1500',
+				D1_CLASS1500:  '1" class 1500',
+				D15_CLASS1500: '1,5" class 1500',
+				D2_CLASS1500:  '2" class 1500',
+				D1_CLASS2500:  '1" class 2500',
 				D15_CLASS2500: '1,5" class 2500',
-				D2_CLASS2500: '2" class 2500',
-				D3_CLASS300: '3" class 300',
+				D2_CLASS2500:  '2" class 2500',
+
+				D3_CLASS300:     '3" class 300',
 				D3_CLASS400_600: '3" class 400/600',
-				D3_CLASS900: '3" class 900',
-				D3_CLASS1500: '3" class 1500',
-				D3_CLASS2500: '3" class 2500',
+				D3_CLASS900:     '3" class 900',
+				D3_CLASS1500:    '3" class 1500',
+				D3_CLASS2500:    '3" class 2500',
 			},
 			DIN: {
 				DN20PN25_6: "DN 20 PN 2.5/6",
 				DN20PN10_40: "DN 20 PN 10/16/25/40",
+				DN20PN16: "DN 20 PN 16",
 				DN20PN63_100: "DN 20 PN 63/100",
 
 				DN25PN25_6: "DN 25 PN 2.5/6",
 				DN25PN10_40: "DN 25 PN 10/16/25/40",
+				DN25PN16: "DN 25 PN 16",
+				DN25PN40: "DN 25 PN 40",
 				DN25PN63_100: "DN 25 PN 63/100",
 				// DN25PN160: "DN 25 PN 160", // absent since rev.AS
 				// DN25PN250: "DN 25 PN 250", // absent since rev.AS
@@ -138,6 +148,8 @@ CommonRepr.params = {
 
 				DN40PN25_6: "DN 40 PN 2.5/6",
 				DN40PN10_40: "DN 40 PN 10/16/25/40",
+				DN40PN16: "DN 40 PN 16",
+				DN40PN40: "DN 40 PN 40",
 				DN40PN63_100: "DN 40 PN 63/100",
 				// DN40PN160: "DN 40 PN 160", // absent since rev.AS
 				// DN40PN250: "DN 40 PN 250", // absent since rev.AS
@@ -146,9 +158,11 @@ CommonRepr.params = {
 
 				DN50PN25_6: "DN 50 PN 2.5/6",
 				DN50PN10_16: "DN 50 PN 10/16",
+				DN50PN16: "DN 50 PN 16",
 				DN50PN25_40: "DN 50 PN 25/40",
+				DN50PN40: "DN 50 PN 40",
 				DN50PN63: "DN 50 PN 63",
-				// DN50PN100: "DN 50 PN 100", // absent since rev.AS
+				DN50PN100: "DN 50 PN 100",
 				// DN50PN160: "DN 50 PN 160", // absent since rev.AS
 				// DN50PN250: "DN 50 PN 250", // absent since rev.AS
 				// DN50PN320: "DN 50 PN 320", // absent since rev.AS
@@ -176,6 +190,7 @@ CommonRepr.params = {
 
 				DN100PN25_6: "DN 100 PN 2.5/6",
 				DN100PN10_16: "DN 100 PN 10/16",
+				DN100PN16: "DN 100 PN 16",
 				DN100PN25_40: "DN 100 PN 25/40",
 				DN100PN63: "DN 100 PN 63",
 				// DN100PN100: "DN 100 PN 100",
@@ -579,10 +594,10 @@ CommonRepr.decode = {
 				const idx = bases.indexOf(base);
 				return (idx == -1) ? undefined : baseLength + idx * baseStep + offset * lengthStep;
 			}
-			let length =
-				regularLength(["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "R", "T"], 25)
-				|| regularLength(["V", "W", "X", "Y"], 830)
-				|| {
+			let length = regularLength(
+					["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "R", "T"],
+					25
+				) || regularLength(["V", "W", "X", "Y"], 830) || {
 					"0U": 825,  "1U": 2050, "2U": 2060, "3U": 2380, "4U": 2420, "5U": 2710,
 					"6U": 2780, "7U": 2600, "8U": 1525, "9U": 88,   "0Z": 1100, "1Z": 1800,
 					"2Z": 1665, "3Z": 2000, "4Z": 1250, "5Z": 1060, "6Z": 1120, "7Z": 1300,
@@ -615,23 +630,146 @@ CommonRepr.decode = {
 		},
 
 		procConnOfThreaded: (str) => ({
-			// to-do
+			T02: [ CommonRepr.params.mountThread.taperedThr.BSPT05,  CommonRepr.params.stemStyle.STEPPED ],
+			T04: [ CommonRepr.params.mountThread.taperedThr.BSPT075, CommonRepr.params.stemStyle.STEPPED ],
+			T06: [ CommonRepr.params.mountThread.taperedThr.BSPT1,   CommonRepr.params.stemStyle.STEPPED ],
+			T08: [ CommonRepr.params.mountThread.taperedThr.BSPT05,  CommonRepr.params.stemStyle.TAPERED ],
+			T10: [ CommonRepr.params.mountThread.taperedThr.BSPT075, CommonRepr.params.stemStyle.TAPERED ],
+			T12: [ CommonRepr.params.mountThread.taperedThr.BSPT1,   CommonRepr.params.stemStyle.TAPERED ],
+			T14: [ CommonRepr.params.mountThread.taperedThr.BSPT05,  CommonRepr.params.stemStyle.STRAIGHT ],
+			T16: [ CommonRepr.params.mountThread.taperedThr.BSPT075, CommonRepr.params.stemStyle.STRAIGHT ],
+			T18: [ CommonRepr.params.mountThread.taperedThr.BSPT1,   CommonRepr.params.stemStyle.STRAIGHT ],
+
+			T20: [ CommonRepr.params.mountThread.parallelThr.BSPF05,  CommonRepr.params.stemStyle.STEPPED ],
+			T22: [ CommonRepr.params.mountThread.parallelThr.BSPF075, CommonRepr.params.stemStyle.STEPPED ],
+			T24: [ CommonRepr.params.mountThread.parallelThr.BSPF1,   CommonRepr.params.stemStyle.STEPPED ],
+			T26: [ CommonRepr.params.mountThread.parallelThr.BSPF05,  CommonRepr.params.stemStyle.TAPERED ],
+			T28: [ CommonRepr.params.mountThread.parallelThr.BSPF075, CommonRepr.params.stemStyle.TAPERED ],
+			T30: [ CommonRepr.params.mountThread.parallelThr.BSPF1,   CommonRepr.params.stemStyle.TAPERED ],
+			T32: [ CommonRepr.params.mountThread.parallelThr.BSPF05,  CommonRepr.params.stemStyle.STRAIGHT ],
+			T34: [ CommonRepr.params.mountThread.parallelThr.BSPF075, CommonRepr.params.stemStyle.STRAIGHT ],
+			T36: [ CommonRepr.params.mountThread.parallelThr.BSPF1,   CommonRepr.params.stemStyle.STRAIGHT ],
+
+			T38: [ CommonRepr.params.mountThread.taperedThr.ANPT05,  CommonRepr.params.stemStyle.STEPPED ],
+			T40: [ CommonRepr.params.mountThread.taperedThr.ANPT075, CommonRepr.params.stemStyle.STEPPED ],
+			T42: [ CommonRepr.params.mountThread.taperedThr.ANPT1,   CommonRepr.params.stemStyle.STEPPED ],
+			T44: [ CommonRepr.params.mountThread.taperedThr.ANPT05,  CommonRepr.params.stemStyle.TAPERED ],
+			T46: [ CommonRepr.params.mountThread.taperedThr.ANPT075, CommonRepr.params.stemStyle.TAPERED ],
+			T48: [ CommonRepr.params.mountThread.taperedThr.ANPT1,   CommonRepr.params.stemStyle.TAPERED ],
+			T50: [ CommonRepr.params.mountThread.taperedThr.ANPT05,  CommonRepr.params.stemStyle.STRAIGHT ],
+			T52: [ CommonRepr.params.mountThread.taperedThr.ANPT075, CommonRepr.params.stemStyle.STRAIGHT ],
+			T54: [ CommonRepr.params.mountThread.taperedThr.ANPT1,   CommonRepr.params.stemStyle.STRAIGHT ],
+
+			T56: [ CommonRepr.params.mountThread.taperedThr.API05,  CommonRepr.params.stemStyle.STEPPED ],
+			T58: [ CommonRepr.params.mountThread.taperedThr.API075, CommonRepr.params.stemStyle.STEPPED ],
+			T60: [ CommonRepr.params.mountThread.taperedThr.API1,   CommonRepr.params.stemStyle.STEPPED ],
+			T62: [ CommonRepr.params.mountThread.taperedThr.API05,  CommonRepr.params.stemStyle.TAPERED ],
+			T64: [ CommonRepr.params.mountThread.taperedThr.API075, CommonRepr.params.stemStyle.TAPERED ],
+			T66: [ CommonRepr.params.mountThread.taperedThr.API1,   CommonRepr.params.stemStyle.TAPERED ],
+			T68: [ CommonRepr.params.mountThread.taperedThr.API05,  CommonRepr.params.stemStyle.STRAIGHT ],
+			T70: [ CommonRepr.params.mountThread.taperedThr.API075, CommonRepr.params.stemStyle.STRAIGHT ],
+			T72: [ CommonRepr.params.mountThread.taperedThr.API1,   CommonRepr.params.stemStyle.STRAIGHT ],
+			
+			T74: [ CommonRepr.params.mountThread.parallelThr.M24x15, CommonRepr.params.stemStyle.STEPPED ],
+			T90: [ CommonRepr.params.mountThread.parallelThr.M24x15, CommonRepr.params.stemStyle.TAPERED ],
+			T93: [ CommonRepr.params.mountThread.parallelThr.M27x2,  CommonRepr.params.stemStyle.TAPERED ],
+			T95: [ CommonRepr.params.mountThread.parallelThr.M33x2,  CommonRepr.params.stemStyle.TAPERED ],
+			T98: [ CommonRepr.params.mountThread.parallelThr.M20x15, CommonRepr.params.stemStyle.TAPERED ],
 		}[str]),
 
 		procConnOfSocketWeld: (str) => ({
-			// to-do
+			W02: [ CommonRepr.params.mountWeld.pipeSizeInch.D075, CommonRepr.params.stemStyle.STEPPED ],
+			W04: [ CommonRepr.params.mountWeld.pipeSizeInch.D1,   CommonRepr.params.stemStyle.STEPPED ],
+			W06: [ CommonRepr.params.mountWeld.pipeSizeInch.D125, CommonRepr.params.stemStyle.STEPPED ],
+			W08: [ CommonRepr.params.mountWeld.pipeSizeInch.D15,  CommonRepr.params.stemStyle.STEPPED ],
+			W10: [ CommonRepr.params.mountWeld.pipeSizeInch.D075, CommonRepr.params.stemStyle.TAPERED ],
+			W12: [ CommonRepr.params.mountWeld.pipeSizeInch.D1,   CommonRepr.params.stemStyle.TAPERED ],
+			W14: [ CommonRepr.params.mountWeld.pipeSizeInch.D125, CommonRepr.params.stemStyle.TAPERED ],
+			W16: [ CommonRepr.params.mountWeld.pipeSizeInch.D15,  CommonRepr.params.stemStyle.TAPERED ],
+			W18: [ CommonRepr.params.mountWeld.pipeSizeInch.D075, CommonRepr.params.stemStyle.STRAIGHT ],
+			W20: [ CommonRepr.params.mountWeld.pipeSizeInch.D1,   CommonRepr.params.stemStyle.STRAIGHT ],
+			W22: [ CommonRepr.params.mountWeld.pipeSizeInch.D125, CommonRepr.params.stemStyle.STRAIGHT ],
+			W24: [ CommonRepr.params.mountWeld.pipeSizeInch.D15,  CommonRepr.params.stemStyle.STRAIGHT ],
 		}[str]),
 
 		procConnOfAsmeFlange: (str) => ({
-			// to-do
+			F02: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS150,  CommonRepr.params.stemStyle.STEPPED ],
+			F04: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS150,  CommonRepr.params.stemStyle.TAPERED ],
+			F06: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS150,  CommonRepr.params.stemStyle.STRAIGHT ],
+			F08: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS150, CommonRepr.params.stemStyle.STEPPED ],
+			F10: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS150, CommonRepr.params.stemStyle.TAPERED ],
+			F12: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS150, CommonRepr.params.stemStyle.STRAIGHT ],
+			F14: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS150,  CommonRepr.params.stemStyle.STEPPED ],
+			F16: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS150,  CommonRepr.params.stemStyle.TAPERED ],
+			F17: [ CommonRepr.params.mountFlange.size.ASME.D3_CLASS150,  CommonRepr.params.stemStyle.TAPERED ],
+			F18: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS150,  CommonRepr.params.stemStyle.STRAIGHT ],
+			F19: [ CommonRepr.params.mountFlange.size.ASME.D4_CLASS150,  CommonRepr.params.stemStyle.STRAIGHT ],
+
+			F20: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS300,   CommonRepr.params.stemStyle.STEPPED ],
+			F21: [ CommonRepr.params.mountFlange.size.ASME.D4_CLASS150,   CommonRepr.params.stemStyle.TAPERED ],
+			F22: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS300,   CommonRepr.params.stemStyle.TAPERED ],
+			F23: [ CommonRepr.params.mountFlange.size.ASME.D075_CLASS300, CommonRepr.params.stemStyle.TAPERED ],
+			F24: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS300,   CommonRepr.params.stemStyle.STRAIGHT ],
+			F25: [ CommonRepr.params.mountFlange.size.ASME.D6_CLASS150,   CommonRepr.params.stemStyle.TAPERED ],
+			F26: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS300,  CommonRepr.params.stemStyle.STEPPED ],
+			F28: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS300,  CommonRepr.params.stemStyle.TAPERED ],
+			F30: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS300,  CommonRepr.params.stemStyle.STRAIGHT ],
+			F32: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS300,   CommonRepr.params.stemStyle.STEPPED ],
+			F34: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS300,   CommonRepr.params.stemStyle.TAPERED ],
+			F36: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS300,   CommonRepr.params.stemStyle.STRAIGHT ],
+
+			F38: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS600,  CommonRepr.params.stemStyle.STEPPED ],
+			F40: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS600,  CommonRepr.params.stemStyle.TAPERED ],
+			F42: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS600,  CommonRepr.params.stemStyle.STRAIGHT ],
+			F44: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS600, CommonRepr.params.stemStyle.STEPPED ],
+			F48: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS600, CommonRepr.params.stemStyle.TAPERED ],
+			F44: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS600, CommonRepr.params.stemStyle.STRAIGHT ],
+			F50: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS600,  CommonRepr.params.stemStyle.STEPPED ],
+			F52: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS600,  CommonRepr.params.stemStyle.TAPERED ],
+			F54: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS600,  CommonRepr.params.stemStyle.STRAIGHT ],
+
+			F56: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS1500,  CommonRepr.params.stemStyle.STEPPED ],
+			F58: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS1500,  CommonRepr.params.stemStyle.TAPERED ],
+			F60: [ CommonRepr.params.mountFlange.size.ASME.D1_CLASS1500,  CommonRepr.params.stemStyle.STRAIGHT ],
+			F62: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS1500, CommonRepr.params.stemStyle.STEPPED ],
+			F64: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS1500, CommonRepr.params.stemStyle.TAPERED ],
+			F66: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS1500, CommonRepr.params.stemStyle.STRAIGHT ],
+			F68: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS1500,  CommonRepr.params.stemStyle.STEPPED ],
+			F70: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS1500,  CommonRepr.params.stemStyle.TAPERED ],
+			F72: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS1500,  CommonRepr.params.stemStyle.STRAIGHT ],
+
+			F82: [ CommonRepr.params.mountFlange.size.ASME.D15_CLASS2500, CommonRepr.params.stemStyle.TAPERED ],
+			F88: [ CommonRepr.params.mountFlange.size.ASME.D2_CLASS2500,  CommonRepr.params.stemStyle.TAPERED ],
 		}[str]),
 
 		procConnOfDinFlange: (str) => ({
-			// to-do
+			D02: [ CommonRepr.params.mountFlange.size.DIN.DN25PN16, CommonRepr.params.stemStyle.STEPPED ],
+			D04: [ CommonRepr.params.mountFlange.size.DIN.DN25PN16, CommonRepr.params.stemStyle.TAPERED ],
+			D06: [ CommonRepr.params.mountFlange.size.DIN.DN25PN16, CommonRepr.params.stemStyle.STRAIGHT ],
+			D08: [ CommonRepr.params.mountFlange.size.DIN.DN25PN40, CommonRepr.params.stemStyle.STEPPED ],
+			D10: [ CommonRepr.params.mountFlange.size.DIN.DN25PN40, CommonRepr.params.stemStyle.TAPERED ],
+			D12: [ CommonRepr.params.mountFlange.size.DIN.DN25PN40, CommonRepr.params.stemStyle.STRAIGHT ],
+			D14: [ CommonRepr.params.mountFlange.size.DIN.DN40PN16, CommonRepr.params.stemStyle.STEPPED ],
+			D16: [ CommonRepr.params.mountFlange.size.DIN.DN40PN16, CommonRepr.params.stemStyle.TAPERED ],
+			D18: [ CommonRepr.params.mountFlange.size.DIN.DN40PN16, CommonRepr.params.stemStyle.STRAIGHT ],
+			D20: [ CommonRepr.params.mountFlange.size.DIN.DN40PN40, CommonRepr.params.stemStyle.STEPPED ],
+			D22: [ CommonRepr.params.mountFlange.size.DIN.DN40PN40, CommonRepr.params.stemStyle.TAPERED ],
+			D24: [ CommonRepr.params.mountFlange.size.DIN.DN40PN40, CommonRepr.params.stemStyle.STRAIGHT ],
+			D28: [ CommonRepr.params.mountFlange.size.DIN.DN50PN40, CommonRepr.params.stemStyle.TAPERED ],
+			D33: [ CommonRepr.params.mountFlange.size.DIN.DN50PN40, CommonRepr.params.stemStyle.STRAIGHT ],
+			D40: [ CommonRepr.params.mountFlange.size.DIN.DN20PN16, CommonRepr.params.stemStyle.STEPPED ],
+			D46: [ CommonRepr.params.mountFlange.size.DIN.DN50PN16, CommonRepr.params.stemStyle.TAPERED ],
+			D66: [ CommonRepr.params.mountFlange.size.DIN.DN25PN63_100, CommonRepr.params.stemStyle.TAPERED ],
+			D78: [ CommonRepr.params.mountFlange.size.DIN.DN50PN100, CommonRepr.params.stemStyle.TAPERED ],
+			D83: [ CommonRepr.params.mountFlange.size.DIN.DN100PN16, CommonRepr.params.stemStyle.TAPERED ],
 		}[str]),
 
 		procConnOfWeldIn: (str) => ({
-			// to-do
+			E01: [ CommonRepr.params.mountWeld.pipeSizeDIN43772.DIN_24, CommonRepr.params.stemStyle.TAPERED ],
+			E02: [ CommonRepr.params.mountWeld.pipeSizeDIN43772.DIN_24, CommonRepr.params.stemStyle.TAPERED ],
+			E03: [ CommonRepr.params.mountWeld.pipeSizeDIN43772.DIN_24, CommonRepr.params.stemStyle.TAPERED ],
+			E04: [ CommonRepr.params.mountWeld.pipeSizeDIN43772.DIN_24, CommonRepr.params.stemStyle.TAPERED ],
+			E05: [ CommonRepr.params.mountWeld.pipeSizeDIN43772.DIN_24, CommonRepr.params.stemStyle.TAPERED ],
 		}[str]),
 
 		instrConn: (str) => ({
