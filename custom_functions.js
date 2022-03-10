@@ -56,9 +56,7 @@ function MAKEWELL(model, unit, immersLen, mountStyle, processConn, stemStyle, ma
    */
 function TOD01(range) {
 	const values = valueToMatrix(range);
-	return representMatrix_(values, repr => {
-		return "TOD01: to-do";
-	});
+	return representMatrix_(values, repr => repr.convertToD01());
 }
 
 /**
@@ -69,9 +67,7 @@ function TOD01(range) {
    */
 function TO114C(range) {
 	const values = valueToMatrix(range);
-	return representMatrix_(values, repr => {
-		return "TO114C: to-do";
-	});
+	return representMatrix_(values, repr => repr.convertTo114C());
 }
 
 /**
@@ -82,9 +78,7 @@ function TO114C(range) {
  */
 function TO0096(range) {
 	const values = valueToMatrix(range);
-	return representMatrix_(values, repr => {
-		return "TO0096: to-do";
-	});
+	return representMatrix_(values, repr => repr.convertTo0096());
 }
 
 function valueToMatrix(value) {

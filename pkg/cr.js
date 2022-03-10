@@ -80,14 +80,17 @@ class CommonRepr {
 
 	convertTo114C() {
 		// to-do
+		return "this is 114C twell";
 	}
 
 	convertToD01() {
 		// to-do
+		return "this is D01 twell";
 	}
 
 	convertTo0096() {
 		// to-do
+		return "this is 0096 twell";
 	}
 
 	toString() {
