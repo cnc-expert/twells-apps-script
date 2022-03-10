@@ -1,46 +1,5 @@
 /** @OnlyCurrentDoc */
 
-// function test_HUMAN_() {
-// 	const input1 = [["114CE0110PAC2SC035AA050B040Q76Q73R16Q8Q3", "D01Y4CT95KJN000 Rev.BV 0096-Y-0145-T95", "114CM0110PAC2SC035AA050B040Q76Q73R16Q8Q3"]];
-// 	const input2 = 1;
-// 	const got = HUMAN(input1, input2);
-// 	Logger.log(got);
-// }
-
-const humanFmt = {
-	STR: 0,
-	COL: 1,
-	ROW: 2,
-	COL_WITH_HEADERS: 3,
-	ROW_WITH_HEADERS: 4,
-}
-
-function rowsAndColsOfInputRange_(range, fmt) {
-	const values = Array.isArray(range) ? range : [[range]];
-	const formatsReadingOneRow = [humanFmt.COL, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
-	const formatsReadingOneCol = [humanFmt.ROW, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
-	const rows = formatsReadingOneRow.includes(fmt) ? 1 : values.length;
-	const cols = formatsReadingOneCol.includes(fmt) ? 1 : values[0].length;
-	return { values, rows, cols };
-}
-
-function funcToRepresent_(model) {
-	const reprFunc = {
-		[ThermowellParser.models.M_114C]: CommonRepr.represent114C,
-		[ThermowellParser.models.M_D01]:  CommonRepr.representD01,
-		[ThermowellParser.models.M_0096]: CommonRepr.represent0096,
-	}[model];
-	return reprFunc?.bind(CommonRepr);
-}
-
-function addColumnToMatrix_(matrix, column) {
-	column.forEach(([val], i) => {
-		matrix[i] = matrix[i] || [];
-		matrix[i].push(val);
-	});
-	return matrix;
-}
-
 /**
  * Display human readable form of an order code.
  * @param  {any}     range  A range containing order codes.
@@ -52,34 +11,24 @@ function addColumnToMatrix_(matrix, column) {
  * @customfunction
  */
 function HUMAN(range, fmt) {
-	const { values, rows, cols } = rowsAndColsOfInputRange_(range, fmt);
-	const outArray = [];
+	const values = formatSizeOfRange_(range, fmt);
 
-	for (let r = 0; r < rows; r++) {
-		outArray[r] = outArray[r] || [];
+	switch (fmt) {	
+		case humanFmt.STR:
+			return representMatrix_(values, repr => repr.toString());
 
-		for (let c = 0; c < cols; c++) {
+		case humanFmt.COL:
+			return representRow_(values, repr => repr.columnDescription().flat());
 
-			const parsed = ThermowellParser.parse(values[r][c]);
-			if (!parsed) {
-				outArray[r][c] = "Error: cannot parse";
-				continue;
-			}
-			const reprFunc = funcToRepresent_(parsed.model);
-			if (!reprFunc) {
-				outArray[r][c] = `Error: not implemented yet`;
-				continue;
-			}
-			const repr = reprFunc(parsed);
+		case humanFmt.ROW:
+			return representColumn_(values, repr => repr.rowDescription().flat());
 
-			if (fmt == humanFmt.STR) outArray[r][c] = repr.toString();
-			if (fmt == humanFmt.COL) addColumnToMatrix_(outArray, repr.columnDescription());
-			if (fmt == humanFmt.ROW) [outArray[r]] = repr.rowDescription();
-			if (fmt == humanFmt.COL_WITH_HEADERS) return repr.columnDescription(true);
-			if (fmt == humanFmt.ROW_WITH_HEADERS) return repr.rowDescription(true);
-		}
+		case humanFmt.COL_WITH_HEADERS:
+			return represent_(values[0][0], repr => repr.columnDescription(true));
+
+		case humanFmt.ROW_WITH_HEADERS:
+			return represent_(values[0][0], repr => repr.rowDescription(true));
 	}
-	return outArray;
 }
 
 /**
@@ -130,7 +79,103 @@ function TO114C(range) {
  * @customfunction
  */
 function TO0096(range) {
-	return "TO0096: to-do";
+	const values = Array.isArray(range) ? range : [[range]];
+	return representMatrix_(values, repr => {
+		return "TO0096: to-do";
+	});
+}
+
+const humanFmt = {
+	DEFAULT: -1,
+	STR: 0,
+	COL: 1,
+	ROW: 2,
+	COL_WITH_HEADERS: 3,
+	ROW_WITH_HEADERS: 4,
+}
+
+function formatSizeOfRange_(range, fmt) {
+	const values = Array.isArray(range) ? range : [[range]];
+
+	const formatsReadingOneRow = [humanFmt.COL, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
+	const formatsReadingOneCol = [humanFmt.ROW, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
+	const rows = formatsReadingOneRow.includes(fmt) ? 1 : values.length;
+	const cols = formatsReadingOneCol.includes(fmt) ? 1 : values[0].length;
+	values.splice(rows);
+	values.forEach(row => row?.splice(cols));
+
+	return values;
+}
+
+function representMatrix_(values, callback) {
+	const outArray = [];
+
+	for (let r = 0; r < values.length; r++) {
+		outArray[r] = outArray[r] || [];
+		for (let c = 0; c < values[0].length; c++) {
+
+			try {
+				outArray[r][c] = represent_(values[r][c], callback);
+			} catch (e) {
+				outArray[r][c] = "Error: " + e.message;
+			}
+		}
+	}
+
+	return outArray;
+}
+
+function representRow_(values, callback) {
+	const outArray = [];
+
+	for (let c = 0; c < values[0].length; c++) {
+		try {
+			const col = represent_(values[0][c], callback);
+			col.forEach((val, i) => {
+				outArray[i] = outArray[i] || Array(c);
+				outArray[i].push(val);
+			});
+		} catch (e) {
+			outArray.forEach(row => row.push(""));
+			outArray[0][c] = "Error: " + e.message;
+		}
+	}
+
+	return outArray;
+}
+
+function representColumn_(values, callback) {
+	const outArray = [];
+
+	for (let r = 0; r < values.length; r++) {
+		try {
+			outArray[r] = represent_(values[r][0], callback);
+		} catch (e) {
+			outArray[r] = [ "Error: " + e.message ];
+		}
+	}
+
+	return outArray;
+}
+
+function represent_(str, callback) {
+	const parsed = ThermowellParser.parse(str);
+	if (!parsed) throw new Error("cannot parse");
+
+	const func = chooseFuncToRepresentModel_(parsed.model);
+	if (!func) throw new Error("not implemented yet");
+
+	const innerRepr = func(parsed);
+	return callback(innerRepr);
+}
+
+function chooseFuncToRepresentModel_(model) {
+	const reprFunc = {
+		[ThermowellParser.models.M_114C]: CommonRepr.represent114C,
+		[ThermowellParser.models.M_D01]:  CommonRepr.representD01,
+		[ThermowellParser.models.M_0096]: CommonRepr.represent0096,
+	}[model];
+	return reprFunc?.bind(CommonRepr);
 }
 
 var module = {}; // GAS doesn't understand CommonJS
