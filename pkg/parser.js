@@ -60,6 +60,7 @@ class ThermowellParser {
 	static parseOptions(optString) {
 		const reOptions = /[A-Z]{1,2}\d*/ig;
 		const strOptions = optString?.match(reOptions) ?? [];
+		// return strOptions;
 		return strOptions.map(this.parseOption);
 	}
 
@@ -81,10 +82,10 @@ class ThermowellParser {
 			`(?<material>\\w\\w)${delim}` +
 			`(?<headLen>\\d\\d\\d)${delim}` +
 			`(?<instrConn>\\w)${delim}` +
-			`(?<opts>.*)`, "i"));
+			`(?<optsList>.*)`, "i"));
 		if (!mainParams) return null;
-		const options = this.parseOptions(mainParams.groups.opts);
-		delete mainParams.groups.opts;
+		const options = this.parseOptions(mainParams.groups.optsList);
+		delete mainParams.groups.optsList;
 		return { ...mainParams.groups, options };
 	}
 
@@ -103,7 +104,7 @@ class ThermowellParser {
 			`(?<mountStyle>\\w\\w\\w)${delim}` +
 			`(?<headLen>\\w)${delim}` +
 			`(?<instrConn>\\w)${delim}` +
-			`(?:N(?<optSet>\\d\\d\\d))?`, "i"));
+			`(?<optsSet>\\w\\w\\w\\w)?`, "i"));
 		if (!mainParams) return null;
 		return { ...mainParams.groups };
 	}
@@ -124,17 +125,17 @@ class ThermowellParser {
 			`(?<mountStyle>\\w\\d\\d)${delim}` +
 			`T(?<headLen>\\d{1,3})${delim}` +
 			`(?<instrConn>\\w)${delim}` +
-			`(?<opts>.*)`, "i"));
+			`(?<optsList>.*)`, "i"));
 		if (!mainParams) return null;
-		const options = this.parseOptions(mainParams.groups.opts);
-		delete mainParams.groups.opts;
+		const options = this.parseOptions(mainParams.groups.optsList);
+		delete mainParams.groups.optsList;
 		return { ...mainParams.groups, options };
 	}
 }
 
 ThermowellParser.models = {
 	M_114C: "114C",
-	M_D01: "D01",
+	M_D01:  "D01",
 	M_0096: "0096",
 	M_UNKNOWN: "",
 };

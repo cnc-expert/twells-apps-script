@@ -129,7 +129,7 @@ describe("Parsing D01", () => {
 			mountStyle: 'T26',
 			headLen: 'K',
 			instrConn: 'D',
-			optSet: '000',
+			optsSet: 'N000',
 		};
 		expect(got).toEqual(want);
 	});

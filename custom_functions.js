@@ -24,10 +24,11 @@ function rowsAndColsOfInputRange_(range, fmt) {
 	return { values, rows, cols };
 }
 
-function representFunction_(model) {
+function funcToRepresent_(model) {
 	const reprFunc = {
 		[ThermowellParser.models.M_114C]: CommonRepr.represent114C,
-		[ThermowellParser.models.M_D01]: CommonRepr.representD01,
+		[ThermowellParser.models.M_D01]:  CommonRepr.representD01,
+		[ThermowellParser.models.M_0096]: CommonRepr.represent0096,
 	}[model];
 	return reprFunc?.bind(CommonRepr);
 }
@@ -64,7 +65,7 @@ function HUMAN(range, fmt) {
 				outArray[r][c] = "Error: cannot parse";
 				continue;
 			}
-			const reprFunc = representFunction_(parsed.model);
+			const reprFunc = funcToRepresent_(parsed.model);
 			if (!reprFunc) {
 				outArray[r][c] = `Error: not implemented yet`;
 				continue;

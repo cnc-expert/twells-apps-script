@@ -3,11 +3,21 @@ const repr = require("../pkg/cr.js");
 
 describe("Common representation", () => {
 
-	test("114C", () => {
+	test("114C", () => { // to-do
 		const input = parser.parse("114CM0320VAM3SC080AC01");
 		// const want = 
 		const got = repr.represent114C(input);
-		// console.log(got);
+		console.log(got);
+		// console.log(got.toString());
+		// console.log(got.verboseDescription());
+		//expect(got).toEqual(want);
+	});
+
+	test("0096", () => { // to-do
+		const input = parser.parse("0096-D-0400-T26-T100-R R01 R05 R07");
+		// const want = 
+		const got = repr.represent0096(input);
+		console.log(got);
 		// console.log(got.toString());
 		// console.log(got.verboseDescription());
 		//expect(got).toEqual(want);
@@ -110,6 +120,7 @@ describe("D01: immersion length code", () => {
 		const input = parser.parse(`D01D${lengthCode}T98KDN000`);
 		const want = 1300;
 		const twell = repr.representD01(input);
+		console.log(twell); // to-do: remove
 		const got = twell.immersionLen;
 		expect(got).toBe(want);
 	});
@@ -119,7 +130,6 @@ describe("D01: immersion length code", () => {
 		const input = parser.parse(`D01D${lengthCode}T98KDN000`);
 		const want = undefined;
 		const twell = repr.representD01(input);
-		console.log(twell); // to-do: remove
 		const got = twell.immersionLen;
 		expect(got).toBe(want);
 	});

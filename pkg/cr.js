@@ -13,14 +13,16 @@ class CommonRepr {
 		commonRepr.unit = this.decode.R114C.unit(parsedObj.unit);
 		commonRepr.immersionLen = +parsedObj.immerLen;
 		commonRepr.style = this.decode.R114C.style(parsedObj.mountStyle);
-		commonRepr.options = parsedObj.options || {}; // to-do
-		commonRepr.options.flangeType = this.decode.R114C.flangeType(parsedObj.mountStyle);
 		commonRepr.procConn = this.decode.R114C.procConn(commonRepr.style, parsedObj.procConn);
 		commonRepr.stemStyle = this.decode.R114C.stemStyle(parsedObj.stemStyle);
 		commonRepr.material = this.decode.R114C.material(parsedObj.material);
 		commonRepr.headLen = +parsedObj.headLen;
 		commonRepr.instrConn = this.decode.R114C.instrConn(parsedObj.instrConn);
 		
+		commonRepr.options = {};
+		commonRepr.options.flangeType = this.decode.R114C.flangeType(parsedObj.mountStyle);
+		commonRepr.options._optsList = parsedObj.options;  // to-do: decode the list
+
 		return commonRepr;
 	}
 
@@ -33,18 +35,45 @@ class CommonRepr {
 	static representD01(parsedObj) {
 		const commonRepr = new this();
 
-
 		commonRepr.model = this.params.model.M_D01;
 		commonRepr.unit = this.params.dimUnit.MM;
 		commonRepr.immersionLen = this.decode.D01.immersionLen(parsedObj.immerLen);
 		commonRepr.style = this.decode.D01.style(parsedObj.mountStyle);
 		const sizeAndStem = this.decode.D01.procConn(parsedObj.mountStyle);
 		[ commonRepr.procConn, commonRepr.stemStyle ] = sizeAndStem;
-		commonRepr.options = { optSet: parsedObj.optSet };  // to-do
-		commonRepr.options.flangeType = this.params.mountFlange.type.PART_WELD;
 		commonRepr.material = this.decode.D01.material(parsedObj.material);
 		commonRepr.headLen = this.decode.D01.headLen(parsedObj.headLen);
 		commonRepr.instrConn = this.decode.D01.instrConn(parsedObj.instrConn);
+
+		commonRepr.options = {};
+		commonRepr.options.flangeType = this.params.mountFlange.type.PART_WELD; // Default. Depends on R07 option.
+		commonRepr.options._optsSet = parsedObj.optsSet;  // to-do: decode the set.
+
+		return commonRepr;
+	}
+
+	/**
+	 * Build common representation object of parsed 0096 order code.
+	 * 
+	 * @param  {object}  parsedObj  Parsed object.
+	 * @return {object}  A common representation object.
+	 */
+	static represent0096(parsedObj) {
+		const commonRepr = new this();
+
+		commonRepr.model = this.params.model.M_0096;
+		commonRepr.unit = this.params.dimUnit.MM;
+		commonRepr.immersionLen = +parsedObj.immerLen;
+		commonRepr.style = this.decode.D01.style(parsedObj.mountStyle);
+		const sizeAndStem = this.decode.D01.procConn(parsedObj.mountStyle);
+		[ commonRepr.procConn, commonRepr.stemStyle ] = sizeAndStem;
+		commonRepr.material = this.decode.D01.material(parsedObj.material);
+		commonRepr.headLen = +parsedObj.headLen;
+		commonRepr.instrConn = this.decode.D01.instrConn(parsedObj.instrConn);
+
+		commonRepr.options = {};
+		commonRepr.options.flangeType = this.params.mountFlange.type.PART_WELD; // Default. Depends on R07 option.
+		commonRepr.options._optsList = parsedObj.options;  // to-do: decode the list.
 
 		return commonRepr;
 	}
