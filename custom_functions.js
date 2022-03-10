@@ -16,16 +16,12 @@ function HUMAN(range, fmt) {
 	switch (fmt) {	
 		case humanFmt.STR:
 			return representMatrix_(values, repr => repr.toString());
-
 		case humanFmt.COL:
 			return representRow_(values, repr => repr.columnDescription().flat());
-
 		case humanFmt.ROW:
 			return representColumn_(values, repr => repr.rowDescription().flat());
-
 		case humanFmt.COL_WITH_HEADERS:
 			return represent_(values[0][0], repr => repr.columnDescription(true));
-
 		case humanFmt.ROW_WITH_HEADERS:
 			return represent_(values[0][0], repr => repr.rowDescription(true));
 	}
@@ -59,7 +55,10 @@ function MAKEWELL(model, unit, immersLen, mountStyle, processConn, stemStyle, ma
    * @customfunction
    */
 function TOD01(range) {
-	return "TOD01: to-do";
+	const values = valueToMatrix(range);
+	return representMatrix_(values, repr => {
+		return "TOD01: to-do";
+	});
 }
 
 /**
@@ -69,7 +68,10 @@ function TOD01(range) {
    * @customfunction
    */
 function TO114C(range) {
-	return "TO114C: to-do";
+	const values = valueToMatrix(range);
+	return representMatrix_(values, repr => {
+		return "TO114C: to-do";
+	});
 }
 
 /**
@@ -79,14 +81,17 @@ function TO114C(range) {
  * @customfunction
  */
 function TO0096(range) {
-	const values = Array.isArray(range) ? range : [[range]];
+	const values = valueToMatrix(range);
 	return representMatrix_(values, repr => {
 		return "TO0096: to-do";
 	});
 }
 
+function valueToMatrix(value) {
+	return Array.isArray(value) ? value : [[value]];
+}
+
 const humanFmt = {
-	DEFAULT: -1,
 	STR: 0,
 	COL: 1,
 	ROW: 2,
@@ -95,27 +100,27 @@ const humanFmt = {
 }
 
 function formatSizeOfRange_(range, fmt) {
-	const values = Array.isArray(range) ? range : [[range]];
+	const matrix = valueToMatrix(range);
 
 	const formatsReadingOneRow = [humanFmt.COL, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
 	const formatsReadingOneCol = [humanFmt.ROW, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
-	const rows = formatsReadingOneRow.includes(fmt) ? 1 : values.length;
-	const cols = formatsReadingOneCol.includes(fmt) ? 1 : values[0].length;
-	values.splice(rows);
-	values.forEach(row => row?.splice(cols));
+	const rows = formatsReadingOneRow.includes(fmt) ? 1 : matrix.length;
+	const cols = formatsReadingOneCol.includes(fmt) ? 1 : matrix[0].length;
+	matrix.splice(rows);
+	matrix.forEach(row => row?.splice(cols));
 
-	return values;
+	return matrix;
 }
 
-function representMatrix_(values, callback) {
+function representMatrix_(matrix, callback) {
 	const outArray = [];
 
-	for (let r = 0; r < values.length; r++) {
+	for (let r = 0; r < matrix.length; r++) {
 		outArray[r] = outArray[r] || [];
-		for (let c = 0; c < values[0].length; c++) {
+		for (let c = 0; c < matrix[0].length; c++) {
 
 			try {
-				outArray[r][c] = represent_(values[r][c], callback);
+				outArray[r][c] = represent_(matrix[r][c], callback);
 			} catch (e) {
 				outArray[r][c] = "Error: " + e.message;
 			}
@@ -125,12 +130,12 @@ function representMatrix_(values, callback) {
 	return outArray;
 }
 
-function representRow_(values, callback) {
+function representRow_(rowMatrix, callback) {
 	const outArray = [];
 
-	for (let c = 0; c < values[0].length; c++) {
+	for (let c = 0; c < rowMatrix[0].length; c++) {
 		try {
-			const col = represent_(values[0][c], callback);
+			const col = represent_(rowMatrix[0][c], callback);
 			col.forEach((val, i) => {
 				outArray[i] = outArray[i] || Array(c);
 				outArray[i].push(val);
@@ -144,12 +149,12 @@ function representRow_(values, callback) {
 	return outArray;
 }
 
-function representColumn_(values, callback) {
+function representColumn_(columnMatrix, callback) {
 	const outArray = [];
 
-	for (let r = 0; r < values.length; r++) {
+	for (let r = 0; r < columnMatrix.length; r++) {
 		try {
-			outArray[r] = represent_(values[r][0], callback);
+			outArray[r] = represent_(columnMatrix[r][0], callback);
 		} catch (e) {
 			outArray[r] = [ "Error: " + e.message ];
 		}
@@ -158,8 +163,8 @@ function representColumn_(values, callback) {
 	return outArray;
 }
 
-function represent_(str, callback) {
-	const parsed = ThermowellParser.parse(str);
+function represent_(codeStr, callback) {
+	const parsed = ThermowellParser.parse(codeStr);
 	if (!parsed) throw new Error("cannot parse");
 
 	const func = chooseFuncToRepresentModel_(parsed.model);
@@ -169,13 +174,13 @@ function represent_(str, callback) {
 	return callback(innerRepr);
 }
 
-function chooseFuncToRepresentModel_(model) {
+function chooseFuncToRepresentModel_(thermowellModel) {
 	const reprFunc = {
 		[ThermowellParser.models.M_114C]: CommonRepr.represent114C,
 		[ThermowellParser.models.M_D01]:  CommonRepr.representD01,
 		[ThermowellParser.models.M_0096]: CommonRepr.represent0096,
-	}[model];
+	}[thermowellModel];
 	return reprFunc?.bind(CommonRepr);
 }
 
-var module = {}; // GAS doesn't understand CommonJS
+var module = {}; // GAS doesn't understand CommonJS needed by Jest

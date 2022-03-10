@@ -120,7 +120,6 @@ describe("D01: immersion length code", () => {
 		const input = parser.parse(`D01D${lengthCode}T98KDN000`);
 		const want = 1300;
 		const twell = repr.representD01(input);
-		console.log(twell); // to-do: remove
 		const got = twell.immersionLen;
 		expect(got).toBe(want);
 	});

@@ -78,6 +78,18 @@ class CommonRepr {
 		return commonRepr;
 	}
 
+	convertTo114C() {
+		// to-do
+	}
+
+	convertToD01() {
+		// to-do
+	}
+
+	convertTo0096() {
+		// to-do
+	}
+
 	toString() {
 		return `${this.model} | ${this.unit} | ${this.style} | ` +
 			`U=${this.immersionLen} | ${this.procConn} | ${this.stemStyle} | ` +
@@ -818,8 +830,6 @@ CommonRepr.decode = {
 			T: CommonRepr.params.mountThread.parallelThr.M18x15,
 		}[str]),
 	},
-
-	R0096: {}, // to-do
 };
 
 module.exports = CommonRepr;
