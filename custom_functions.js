@@ -55,7 +55,7 @@ function MAKEWELL(model, unit, immersLen, mountStyle, processConn, stemStyle, ma
    * @customfunction
    */
 function TOD01(range) {
-	const values = valueToMatrix(range);
+	const values = valueToMatrix_(range);
 	return representMatrix_(values, repr => repr.convertToD01());
 }
 
@@ -66,7 +66,7 @@ function TOD01(range) {
    * @customfunction
    */
 function TO114C(range) {
-	const values = valueToMatrix(range);
+	const values = valueToMatrix_(range);
 	return representMatrix_(values, repr => repr.convertTo114C());
 }
 
@@ -77,11 +77,11 @@ function TO114C(range) {
  * @customfunction
  */
 function TO0096(range) {
-	const values = valueToMatrix(range);
+	const values = valueToMatrix_(range);
 	return representMatrix_(values, repr => repr.convertTo0096());
 }
 
-function valueToMatrix(value) {
+function valueToMatrix_(value) {
 	return Array.isArray(value) ? value : [[value]];
 }
 
@@ -94,7 +94,7 @@ const humanFmt = {
 }
 
 function formatSizeOfRange_(range, fmt) {
-	const matrix = valueToMatrix(range);
+	const matrix = valueToMatrix_(range);
 
 	const formatsReadingOneRow = [humanFmt.COL, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
 	const formatsReadingOneCol = [humanFmt.ROW, humanFmt.COL_HEADERS, humanFmt.ROW_HEADERS];
