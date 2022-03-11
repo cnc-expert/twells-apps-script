@@ -177,7 +177,7 @@ Parameters:
   `Mo` (molybdenum);
   `Ni` (nickel 200);
   `super duplex`;
-  `super duplex NORSOK` according to NORSOK standards;
+  `super duplex NORSOK` (according to NORSOK standards);
   `Ti` (titanium grade 2).
 
 - `headLen` - Head "H" length.
