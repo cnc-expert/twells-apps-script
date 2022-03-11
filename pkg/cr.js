@@ -1,3 +1,9 @@
+const wrapMaterial = (descr, code114C, codeD01) => ({ descr, code114C, codeD01 });
+
+const notSuitableParamsMessages = {
+	material: "[no suit mat!]",
+}
+
 const PARAMS = {
 	model: {
 		M_114C: "114C",
@@ -119,7 +125,7 @@ const PARAMS = {
 				DN100PN16: "DN 100 PN 16",
 				DN100PN25_40: "DN 100 PN 25/40",
 				DN100PN63: "DN 100 PN 63",
-				// DN100PN100: "DN 100 PN 100",
+				DN100PN100: "DN 100 PN 100",
 				// DN100PN160: "DN 100 PN 160", // absent since rev.AS
 				// DN100PN250: "DN 100 PN 250", // absent since rev.AS
 				// DN100PN320: "DN 100 PN 320", // absent since rev.AS
@@ -181,61 +187,60 @@ const PARAMS = {
 		TWISTED: "twisted square",
 	},
 	material: {
-		SST_304: "304",
-		SST_304L: "304L",
-		SST_304_304L: "304/304L",
-		SST_304_PTFE: "304 with Teflon coat",
-		SST_304L_PTFE: "304L with Teflon coat",
-		SST_304_304L_PTFE: "304/304L with Teflon coat",
-		SST_310: "310",
-		SST_316: "316",
-		SST_316L: "316L",
-		SST_316_316L: "316/316L",
-		SST_316L_PFA: "316L with PFA coat",
-		SST_316_316L_PFA: "316/316L with PFA coat",
-		SST_316_316L_NORSOK: "316/316L NORSOK",
-		SST_316_TANTALUM: "316 with tantalum sheath",
-		SST_316_316L_TANTALUM: "316/316L with tantalum sheath",
-		SST_316Ti: "316Ti",
-		SST_321: "321",
-		SST_321H: "321H",
-		SST_347: "347",
-		SST_904L: "904L",
-		alloy20: "alloy 20",
-		alloy400: "alloy 400",
-		alloy400_SST304: "alloy 400 & 304 (stem & flange)",
-		alloy400_SST304_304L: "alloy 400 & 304/304L (stem & flange)",
-		alloy600: "alloy 600",
-		alloy600_SST304: "alloy 600 & 304 (stem & flange)",
-		alloy600_SST304_304L: "alloy 600 & 304/304L (stem & flange)",
-		alloy601: "alloy 601",
-		alloy625: "alloy 625",
-		alloy800: "alloy 800",
-		alloy800H_800HT: "alloy 800H/800HT",
-		alloy825: "alloy 825",
-		alloyB: "alloy B",
-		alloyB3: "alloy B3",
-		alloyC22: "alloy C-22",
-		alloyC22_SST304: "alloy C-22 & 304 (stem & flange)",
-		alloyC22_SST304_304L: "alloy C-22 & 304/304L (stem & flange)",
-		alloyC22_SST316L: "alloy C-22 & 316L (stem & flange)",
-		alloyC22_SST316_316L: "alloy C-22 & 316/316L (stem & flange)",
-		alloyС276: "alloy С-276",
-		alloyС4_SST304: "alloy C-4 & 304 (stem & flange)",
-		alloyС4_SST304_304L: "alloy C-4 & 304/304L (stem & flange)",
-		alloyF44Mo6: "alloy F44 Mo6",
-		carbon: "carbon steel",
-		CrMo_B11_F11: "CrMo B11 & CrMo F11 (stem & flange)",
-		CrMo_B22_F22: "CrMo B22 & CrMo F22 (stem & flange)",
-		CrMo_F91: "CrMo F-91",
-		duplex2205: "duplex 2205",
-		duplex2205_NORSOK: "duplex 2205 NORSOK",
-		Mo: "molybdenum",
-		Ni: "nickel 200",
-		superDuplex: "super duplex",
-		superDuplex_NORSOK: "super duplex NORSOK",
-		special: "special",
-		Ti: "titan grade 2",
+		SST_304:               wrapMaterial("304",                                   "SF", "B"),
+		SST_304L:              wrapMaterial("304L",                                  "SF", "E"),
+		SST_304_304L:          wrapMaterial("304/304L",                              "SF", "E"), // D01: also may be "B"
+		SST_304_PTFE:          wrapMaterial("304 with Teflon coat",                  "SK", "M"),
+		SST_304_304L_PTFE:     wrapMaterial("304/304L with Teflon coat",             "SK", "M"),
+		SST_310:               wrapMaterial("310",                                   "SL", "V"),
+		SST_316:               wrapMaterial("316",                                   "SC", "A"),
+		SST_316L:              wrapMaterial("316L",                                  "SC", "D"),
+		SST_316_316L:          wrapMaterial("316/316L",                              "SC", "D"), // D01: also may be "A"
+		SST_316L_PFA:          wrapMaterial("316L with PFA coat",                    "SJ", "X"), // D01: option M08
+		SST_316_316L_PFA:      wrapMaterial("316/316L with PFA coat",                "SJ", "X"), // D01: option M08
+		SST_316_316L_NORSOK:   wrapMaterial("316/316L NORSOK",                       "SD", notSuitableParamsMessages.material),
+		SST_316_TANTALUM:      wrapMaterial("316 with tantalum sheath",              "SH", "U"),
+		SST_316_316L_TANTALUM: wrapMaterial("316/316L with tantalum sheath",         "SH", "U"),
+		SST_316Ti:             wrapMaterial("316Ti",                                 "SG", "Y"),
+		SST_321:               wrapMaterial("321",                                   "SM", "W"),
+		SST_321H:              wrapMaterial("321H",                                  "SN", notSuitableParamsMessages.material),
+		SST_347:               wrapMaterial("347",                                   "SP", notSuitableParamsMessages.material),
+		SST_904L:              wrapMaterial("904L",                                  "SR", notSuitableParamsMessages.material),
+		alloy20:               wrapMaterial("alloy 20",                              "AG", "F"),
+		alloy400:              wrapMaterial("alloy 400",                             "AH", "G"),
+		alloy400_SST304:       wrapMaterial("alloy 400 & 304 (stem & flange)",       "AG", "X"), // D01: option M01
+		alloy400_SST304_304L:  wrapMaterial("alloy 400 & 304/304L (stem & flange)",  "AG", "X"), // D01: option M01
+		alloy600:              wrapMaterial("alloy 600",                             "AK", "H"),
+		alloy600_SST304:       wrapMaterial("alloy 600 & 304 (stem & flange)",       "AL", "X"), // D01: option M02
+		alloy600_SST304_304L:  wrapMaterial("alloy 600 & 304/304L (stem & flange)",  "AL", "X"), // D01: option M02
+		alloy601:              wrapMaterial("alloy 601",                             "AM", notSuitableParamsMessages.material),
+		alloy625:              wrapMaterial("alloy 625",                             "AN", notSuitableParamsMessages.material),
+		alloy800:              wrapMaterial("alloy 800",                             "AP", notSuitableParamsMessages.material),
+		alloy800H_800HT:       wrapMaterial("alloy 800H/800HT",                      "AQ", notSuitableParamsMessages.material),
+		alloy825:              wrapMaterial("alloy 825",                             "AR", notSuitableParamsMessages.material),
+		alloyB:                wrapMaterial("alloy B", notSuitableParamsMessages.material, "L"),
+		alloyB3:               wrapMaterial("alloy B3",                              "AB", notSuitableParamsMessages.material),
+		alloyC22:              wrapMaterial("alloy C-22",                            "AU", notSuitableParamsMessages.material),
+		alloyC22_SST304:       wrapMaterial("alloy C-22 & 304 (stem & flange)",      "AE", "X"), // D01: option M05
+		alloyC22_SST304_304L:  wrapMaterial("alloy C-22 & 304/304L (stem & flange)", "AE", "X"), // D01: option M05
+		alloyC22_SST316L:      wrapMaterial("alloy C-22 & 316L (stem & flange)",     "AF", "X"), // D01: option M07
+		alloyC22_SST316_316L:  wrapMaterial("alloy C-22 & 316/316L (stem & flange)", "AF", "X"), // D01: option M07
+		alloyС276:             wrapMaterial("alloy С-276",                           "AC", "J"),
+		alloyС4_SST304:        wrapMaterial("alloy C-4 & 304 (stem & flange)",       "AD", "X"), // D01: option M04
+		alloyС4_SST304_304L:   wrapMaterial("alloy C-4 & 304/304L (stem & flange)",  "AD", "X"), // D01: option M04
+		alloyF44Mo6:           wrapMaterial("alloy F44 Mo6",                         "AS", notSuitableParamsMessages.material),
+		carbon:                wrapMaterial("carbon steel",                          "CS", "C"),
+		CrMo_B11_F11:          wrapMaterial("CrMo B11 & CrMo F11 (stem & flange)",   "CA", "Z"),
+		CrMo_B22_F22:          wrapMaterial("CrMo B22 & CrMo F22 (stem & flange)",   "CB", "P"),
+		CrMo_F91:              wrapMaterial("CrMo F-91",                             "CC", "X"), // D01: option M09
+		duplex2205:            wrapMaterial("duplex 2205",                           "DU", "X"), // D01: option M06
+		duplex2205_NORSOK:     wrapMaterial("duplex 2205 NORSOK",                    "DV", notSuitableParamsMessages.material),
+		Mo:                    wrapMaterial("molybdenum",                            "MO", "K"), // Alloys might be different for 114C and D01
+		Ni:                    wrapMaterial("nickel 200",                            "NK", "R"),
+		superDuplex:           wrapMaterial("super duplex",                          "DS", "X"), // D01: option M11
+		superDuplex_NORSOK:    wrapMaterial("super duplex NORSOK",                   "DT", notSuitableParamsMessages.material),
+		special:               wrapMaterial("special", notSuitableParamsMessages.material, "X"),
+		Ti:                    wrapMaterial("titan grade 2",                         "TT", "T"),
 	}
 };
 
@@ -321,48 +326,50 @@ class CommonRepr {
 
 	convertTo114C() {
 		// to-do
-		return "this is 114C twell";
+		return `114C`;
 	}
 
 	convertToD01() {
 		// to-do
-		return "this is D01 twell";
+		return `D01`;
 	}
 
 	convertTo0096() {
-		const twell = new CommonRepr();
-		twell.model = PARAMS.model.M_0096;
+		const matKey = Object.keys(PARAMS.material).find(k => PARAMS.material[k] == this.material);
+		const matCode = PARAMS.material[matKey]?.codeD01 || notSuitableParamsMessages.material;
+
+		const immerLen = new String(this.immersionLen).padStart(4, "0");
 
 		// to-do
-		return `0096-`;
+		const style = "";
+
+		return `0096-${matCode}-${immerLen}-${style}`;
 	}
 
 	toString() {
 		return `${this.model} | ${this.unit} | ${this.style} | ` +
 			`U=${this.immersionLen} | ${this.procConn} | ${this.stemStyle} | ` +
-			`${this.material} | H=${this.headLen} | ${this.instrConn}`;
+			`${this.material.descr} | H=${this.headLen} | ${this.instrConn}`;
 	}
 
 	rowDescription(withHeaders = false) {
-		const headers = ["model", "unit", "mounting style", "immersion length", "process connection", "stem style", "material", "head length", "instr connection"];
-		const values = [this.model, this.unit, this.style, this.immersionLen, this.procConn, this.stemStyle, this.material, this.headLen, this.instrConn];
+		const headers = ["model", "unit", "mounting style", "immersion length",
+			"process connection", "stem style", "material", "head length",
+			"instr connection"];
+		const values = [this.model, this.unit, this.style, this.immersionLen,
+			this.procConn, this.stemStyle, this.material.descr, this.headLen,
+			this.instrConn];
 		return withHeaders ? [headers, values] : [values];
 	}
 
 	columnDescription(withHeaders = false) {
-		const headers = ["model", "unit", "mounting style", "immersion length", "process connection", "stem style", "material", "head length", "instr connection"];
-		const values = [this.model, this.unit, this.style, this.immersionLen, this.procConn, this.stemStyle, this.material, this.headLen, this.instrConn];
+		const headers = ["model", "unit", "mounting style", "immersion length",
+			"process connection", "stem style", "material", "head length",
+			"instr connection"];
+		const values = [this.model, this.unit, this.style, this.immersionLen,
+			this.procConn, this.stemStyle, this.material.descr, this.headLen,
+			this.instrConn];
 		return withHeaders ? headers.map((h, i) => [h, values[i]]) : values.map(v => [v]);
-	}
-}
-
-CommonRepr.coders = {
-	R114C: {
-		// to-do
-	},
-
-	D01: {
-		// to-do
 	}
 }
 
@@ -415,19 +422,24 @@ CommonRepr.decoders = {
 			AD: PARAMS.mountFlange.size.ASME.D3_CLASS150,
 			AE: PARAMS.mountFlange.size.ASME.D4_CLASS150,
 			AF: PARAMS.mountFlange.size.ASME.D6_CLASS150,
+
 			AG: PARAMS.mountFlange.size.ASME.D075_CLASS300,
 			AH: PARAMS.mountFlange.size.ASME.D1_CLASS300,
 			AJ: PARAMS.mountFlange.size.ASME.D15_CLASS300,
 			AK: PARAMS.mountFlange.size.ASME.D2_CLASS300,
+
 			AL: PARAMS.mountFlange.size.ASME.D1_CLASS400_600,
 			AM: PARAMS.mountFlange.size.ASME.D15_CLASS400_600,
 			AN: PARAMS.mountFlange.size.ASME.D2_CLASS400_600,
+
 			AP: PARAMS.mountFlange.size.ASME.D1_CLASS900_1500,
 			AQ: PARAMS.mountFlange.size.ASME.D15_CLASS900_1500,
 			AR: PARAMS.mountFlange.size.ASME.D2_CLASS900_1500,
+
 			AS: PARAMS.mountFlange.size.ASME.D1_CLASS2500,
 			AT: PARAMS.mountFlange.size.ASME.D15_CLASS2500,
 			AU: PARAMS.mountFlange.size.ASME.D2_CLASS2500,
+
 			AV: PARAMS.mountFlange.size.ASME.D3_CLASS300,
 			AW: PARAMS.mountFlange.size.ASME.D3_CLASS400_600,
 			AX: PARAMS.mountFlange.size.ASME.D3_CLASS900,
@@ -437,56 +449,38 @@ CommonRepr.decoders = {
 			FA: PARAMS.mountFlange.size.DIN.DN20PN25_6,
 			FE: PARAMS.mountFlange.size.DIN.DN20PN10_40,
 			FG: PARAMS.mountFlange.size.DIN.DN20PN63_100,
+
 			GA: PARAMS.mountFlange.size.DIN.DN25PN25_6,
 			GE: PARAMS.mountFlange.size.DIN.DN25PN10_40,
 			GG: PARAMS.mountFlange.size.DIN.DN25PN63_100,
-			// GH: PARAMS.mountFlange.size.DIN.DN25PN160, // absent since rev.AS
-			// GJ: PARAMS.mountFlange.size.DIN.DN25PN250, // absent since rev.AS
-			// GK: PARAMS.mountFlange.size.DIN.DN25PN320, // absent since rev.AS
-			// GL: PARAMS.mountFlange.size.DIN.DN25PN400, // absent since rev.AS
+			
 			JA: PARAMS.mountFlange.size.DIN.DN40PN25_6,
 			JE: PARAMS.mountFlange.size.DIN.DN40PN10_40,
 			JG: PARAMS.mountFlange.size.DIN.DN40PN63_100,
-			// JH: PARAMS.mountFlange.size.DIN.DN40PN160, // absent since rev.AS
-			// JJ: PARAMS.mountFlange.size.DIN.DN40PN250, // absent since rev.AS
-			// JK: PARAMS.mountFlange.size.DIN.DN40PN320, // absent since rev.AS
-			// JL: PARAMS.mountFlange.size.DIN.DN40PN400, // absent since rev.AS
+			
 			KA: PARAMS.mountFlange.size.DIN.DN50PN25_6,
 			KC: PARAMS.mountFlange.size.DIN.DN50PN10_16,
 			KE: PARAMS.mountFlange.size.DIN.DN50PN25_40,
 			KF: PARAMS.mountFlange.size.DIN.DN50PN63,
 			KG: PARAMS.mountFlange.size.DIN.DN50PN100,
-			// KH: PARAMS.mountFlange.size.DIN.DN50PN160, // absent since rev.AS
-			// KJ: PARAMS.mountFlange.size.DIN.DN50PN250, // absent since rev.AS
-			// KK: PARAMS.mountFlange.size.DIN.DN50PN320, // absent since rev.AS
-			// KL: PARAMS.mountFlange.size.DIN.DN50PN400, // absent since rev.AS
+			
 			LA: PARAMS.mountFlange.size.DIN.DN65PN25_6,
 			LC: PARAMS.mountFlange.size.DIN.DN65PN10_16,
 			LE: PARAMS.mountFlange.size.DIN.DN65PN25_40,
 			LF: PARAMS.mountFlange.size.DIN.DN65PN63,
 			LG: PARAMS.mountFlange.size.DIN.DN65PN100,
-			// LH: PARAMS.mountFlange.size.DIN.DN65PN160, // absent since rev.AS
-			// LJ: PARAMS.mountFlange.size.DIN.DN65PN250, // absent since rev.AS
-			// LK: PARAMS.mountFlange.size.DIN.DN65PN320, // absent since rev.AS
-			// LL: PARAMS.mountFlange.size.DIN.DN65PN400, // absent since rev.AS
+			
 			MA: PARAMS.mountFlange.size.DIN.DN80PN25_6,
 			MC: PARAMS.mountFlange.size.DIN.DN80PN10_16,
 			ME: PARAMS.mountFlange.size.DIN.DN80PN25_40,
 			MF: PARAMS.mountFlange.size.DIN.DN80PN63,
 			MG: PARAMS.mountFlange.size.DIN.DN80PN100,
-			// MH: PARAMS.mountFlange.size.DIN.DN80PN160, // absent since rev.AS
-			// MJ: PARAMS.mountFlange.size.DIN.DN80PN250, // absent since rev.AS
-			// MK: PARAMS.mountFlange.size.DIN.DN80PN320, // absent since rev.AS
-			// ML: PARAMS.mountFlange.size.DIN.DN80PN400, // absent since rev.AS
+			
 			NA: PARAMS.mountFlange.size.DIN.DN100PN25_6,
 			NC: PARAMS.mountFlange.size.DIN.DN100PN10_16,
 			NE: PARAMS.mountFlange.size.DIN.DN100PN25_40,
 			NF: PARAMS.mountFlange.size.DIN.DN100PN63,
 			NG: PARAMS.mountFlange.size.DIN.DN100PN100,
-			// NH: PARAMS.mountFlange.size.DIN.DN100PN160, // absent since rev.AS
-			// NJ: PARAMS.mountFlange.size.DIN.DN100PN250, // absent since rev.AS
-			// NK: PARAMS.mountFlange.size.DIN.DN100PN320, // absent since rev.AS
-			// NL: PARAMS.mountFlange.size.DIN.DN100PN400, // absent since rev.AS
 		}[str]),
 
 		procConnOfVanStone: (str) => ({
@@ -554,48 +548,53 @@ CommonRepr.decoders = {
 			T: PARAMS.stemStyle.TWISTED,
 		}[str]),
 
-		material: (str) => ({
-			SF: PARAMS.material.SST_304_304L,
-			SK: PARAMS.material.SST_304_304L_PTFE,
-			SL: PARAMS.material.SST_310,
-			SC: PARAMS.material.SST_316_316L,
-			SD: PARAMS.material.SST_316_316L_NORSOK,
-			SJ: PARAMS.material.SST_316_316L_PFA,
-			SH: PARAMS.material.SST_316_316L_TANTALUM,
-			SG: PARAMS.material.SST_316Ti,
-			SM: PARAMS.material.SST_321,
-			SN: PARAMS.material.SST_321H,
-			SP: PARAMS.material.SST_347,
-			SR: PARAMS.material.SST_904L,
-			AG: PARAMS.material.alloy20,
-			AH: PARAMS.material.alloy400,
-			AJ: PARAMS.material.alloy400_SST304_304L,
-			AK: PARAMS.material.alloy600,
-			AL: PARAMS.material.alloy600_SST304_304L,
-			AM: PARAMS.material.alloy601,
-			AN: PARAMS.material.alloy625,
-			AP: PARAMS.material.alloy800,
-			AQ: PARAMS.material.alloy800H_800HT,
-			AR: PARAMS.material.alloy825,
-			AB: PARAMS.material.alloyB3,
-			AU: PARAMS.material.alloyC22,
-			AE: PARAMS.material.alloyC22_SST304_304L,
-			AF: PARAMS.material.alloyC22_SST316_316L,
-			AC: PARAMS.material.alloyС276,
-			AD: PARAMS.material.alloyС4_SST304_304L,
-			AS: PARAMS.material.alloyF44Mo6,
-			CS: PARAMS.material.carbon,
-			CA: PARAMS.material.CrMo_B11_F11,
-			CB: PARAMS.material.CrMo_B22_F22,
-			CC: PARAMS.material.CrMo_F91,
-			DU: PARAMS.material.duplex2205,
-			DV: PARAMS.material.duplex2205_NORSOK,
-			MO: PARAMS.material.Mo,
-			NK: PARAMS.material.Ni,
-			DS: PARAMS.material.superDuplex,
-			DT: PARAMS.material.superDuplex_NORSOK,
-			TT: PARAMS.material.Ti,
-		}[str]),
+		material: (str) => {
+			const matKey = Object.keys(PARAMS.material).find(k => PARAMS.material[k].code114C == str);
+			return PARAMS.material[matKey];
+			// to-do: remove after performance testing:
+			// 	({
+			// 	SF: PARAMS.material.SST_304_304L,
+			// 	SK: PARAMS.material.SST_304_304L_PTFE,
+			// 	SL: PARAMS.material.SST_310,
+			// 	SC: PARAMS.material.SST_316_316L,
+			// 	SD: PARAMS.material.SST_316_316L_NORSOK,
+			// 	SJ: PARAMS.material.SST_316_316L_PFA,
+			// 	SH: PARAMS.material.SST_316_316L_TANTALUM,
+			// 	SG: PARAMS.material.SST_316Ti,
+			// 	SM: PARAMS.material.SST_321,
+			// 	SN: PARAMS.material.SST_321H,
+			// 	SP: PARAMS.material.SST_347,
+			// 	SR: PARAMS.material.SST_904L,
+			// 	AG: PARAMS.material.alloy20,
+			// 	AH: PARAMS.material.alloy400,
+			// 	AJ: PARAMS.material.alloy400_SST304_304L,
+			// 	AK: PARAMS.material.alloy600,
+			// 	AL: PARAMS.material.alloy600_SST304_304L,
+			// 	AM: PARAMS.material.alloy601,
+			// 	AN: PARAMS.material.alloy625,
+			// 	AP: PARAMS.material.alloy800,
+			// 	AQ: PARAMS.material.alloy800H_800HT,
+			// 	AR: PARAMS.material.alloy825,
+			// 	AB: PARAMS.material.alloyB3,
+			// 	AU: PARAMS.material.alloyC22,
+			// 	AE: PARAMS.material.alloyC22_SST304_304L,
+			// 	AF: PARAMS.material.alloyC22_SST316_316L,
+			// 	AC: PARAMS.material.alloyС276,
+			// 	AD: PARAMS.material.alloyС4_SST304_304L,
+			// 	AS: PARAMS.material.alloyF44Mo6,
+			// 	CS: PARAMS.material.carbon,
+			// 	CA: PARAMS.material.CrMo_B11_F11,
+			// 	CB: PARAMS.material.CrMo_B22_F22,
+			// 	CC: PARAMS.material.CrMo_F91,
+			// 	DU: PARAMS.material.duplex2205,
+			// 	DV: PARAMS.material.duplex2205_NORSOK,
+			// 	MO: PARAMS.material.Mo,
+			// 	NK: PARAMS.material.Ni,
+			// 	DS: PARAMS.material.superDuplex,
+			// 	DT: PARAMS.material.superDuplex_NORSOK,
+			// 	TT: PARAMS.material.Ti,
+			// }[str])
+		},
 
 		instrConn: (str) => ({
 			A: PARAMS.mountThread.taperedThr.ANPT05,
@@ -612,30 +611,34 @@ CommonRepr.decoders = {
 	},
 
 	D01: {
-
-		material: (str) => ({
-			B: PARAMS.material.SST_304,
-			E: PARAMS.material.SST_304L,
-			M: PARAMS.material.SST_304_PTFE,
-			V: PARAMS.material.SST_310,
-			A: PARAMS.material.SST_316,
-			D: PARAMS.material.SST_316L,
-			U: PARAMS.material.SST_316_TANTALUM,
-			Y: PARAMS.material.SST_316Ti,
-			W: PARAMS.material.SST_321,
-			F: PARAMS.material.alloy20,
-			G: PARAMS.material.alloy400,
-			H: PARAMS.material.alloy600,
-			L: PARAMS.material.alloyB,
-			J: PARAMS.material.alloyС276,
-			C: PARAMS.material.carbon,
-			Z: PARAMS.material.CrMo_B11_F11,
-			P: PARAMS.material.CrMo_B22_F22,
-			K: PARAMS.material.Mo,
-			R: PARAMS.material.Ni,
-			X: PARAMS.material.special,
-			T: PARAMS.material.Ti,
-		}[str]),
+		material: (str) => {
+			const matKey = Object.keys(PARAMS.material).find(k => PARAMS.material[k].codeD01 == str);
+			return PARAMS.material[matKey];
+			// to-do: remove after performance testing:
+			// ({
+			// 	B: PARAMS.material.SST_304,
+			// 	E: PARAMS.material.SST_304L,
+			// 	M: PARAMS.material.SST_304_PTFE,
+			// 	V: PARAMS.material.SST_310,
+			// 	A: PARAMS.material.SST_316,
+			// 	D: PARAMS.material.SST_316L,
+			// 	U: PARAMS.material.SST_316_TANTALUM,
+			// 	Y: PARAMS.material.SST_316Ti,
+			// 	W: PARAMS.material.SST_321,
+			// 	F: PARAMS.material.alloy20,
+			// 	G: PARAMS.material.alloy400,
+			// 	H: PARAMS.material.alloy600,
+			// 	L: PARAMS.material.alloyB,
+			// 	J: PARAMS.material.alloyС276,
+			// 	C: PARAMS.material.carbon,
+			// 	Z: PARAMS.material.CrMo_B11_F11,
+			// 	P: PARAMS.material.CrMo_B22_F22,
+			// 	K: PARAMS.material.Mo,
+			// 	R: PARAMS.material.Ni,
+			// 	X: PARAMS.material.special,
+			// 	T: PARAMS.material.Ti,
+			// }[str])
+		},
 
 		immersionLen: (str) => {
 			const offset = str[0];

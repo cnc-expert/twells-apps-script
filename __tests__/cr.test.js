@@ -1,26 +1,37 @@
 const parser = require("../pkg/parser.js");
 const repr = require("../pkg/cr.js");
+const { parse } = require("../pkg/parser.js");
 
 describe("Common representation", () => {
 
 	test("114C", () => { // to-do
-		const input = parser.parse("114CM0320VAM3SC080AC01");
-		// const want = 
-		const got = repr.represent114C(input);
-		console.log(got);
-		// console.log(got.toString());
-		// console.log(got.verboseDescription());
+		const input = "114CM0320VAM3SC080AC01";
+		const parsed = parser.parse(input);
+		const got = repr.represent114C(parsed);
+
+		// const want =
+		// console.log(got);
 		//expect(got).toEqual(want);
 	});
 
-	test("0096", () => { // to-do
-		const input = parser.parse("0096-D-0400-T26-T100-R R01 R05 R07");
+	test("D01", () => { // to-do
+		const input = "D01D5DT44ADN162";
+		const parsed = parser.parse(input);
+		const got = repr.representD01(parsed);
+		
 		// const want = 
-		const got = repr.represent0096(input);
 		console.log(got);
-		// console.log(got.toString());
-		// console.log(got.verboseDescription());
-		//expect(got).toEqual(want);
+		// expect(got).toEqual(want);
+	});
+
+	test("0096", () => { // to-do
+		const input = "0096-D-0400-T26-T100-R R01 R05 R07";
+		const parsed = parser.parse(input);
+		const got = repr.represent0096(parsed);
+		
+		// const want = 
+		// console.log(got);
+		// expect(got).toEqual(want);
 	});
 });
 
@@ -131,5 +142,48 @@ describe("D01: immersion length code", () => {
 		const twell = repr.representD01(input);
 		const got = twell.immersionLen;
 		expect(got).toBe(want);
+	});
+});
+
+describe("Convertion to 0096 format", () => {
+
+	test("114C", () => { // to-do
+		const inputMaterial = "AC";
+		const input = `114CM0320VAM3${inputMaterial}080AC01`;
+		const parsed = parser.parse(input);
+
+		const got = repr.represent114C(parsed).convertTo0096();
+
+		const wantMaterial = "J";
+		const want = new RegExp(`0096-${wantMaterial}-`);
+		expect(got).toMatch(want)
+	});
+
+	test("D01", () => { // to-do
+		const inputMaterial = "Z";
+		const inputImmersion = "9B";
+		const input = `D01${inputMaterial}${inputImmersion}T95KJN000 \ Rev.BV 0096-Y-0120-T95`;
+		const parsed = parser.parse(input);
+
+		const got = repr.representD01(parsed).convertTo0096();
+
+		const wantMaterial = inputMaterial;
+		const wantImmersion = "0120"
+		const want = new RegExp(`0096-${wantMaterial}-`); // to-do: use wantImmersion
+		expect(got).toMatch(want);
+	});
+
+	test("0096", () => { // to-do
+		const inputMaterial = "D";
+		const inputImmersion = "0400";
+		const input = `0096-${inputMaterial}-${inputImmersion}-T26-T100-R R01 R05 R07`;
+		const parsed = parser.parse(input);
+
+		const got = repr.represent0096(parsed).convertTo0096();
+
+		const wantMaterial = inputMaterial;
+		const wantImmersion = inputImmersion;
+		const want = new RegExp(`0096-${wantMaterial}-${wantImmersion}-`);
+		expect(got).toMatch(want);
 	});
 });
