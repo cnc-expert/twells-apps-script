@@ -29,7 +29,7 @@ Format:
 
 Parameters:
 
-- `model` - Model: `114C` or `D01`.
+- `model` - Model: `114C`, `D01` or `0096`.
 
 - `unit` - Dimensional unit: `mm` or `inch`.
 
