@@ -2,6 +2,7 @@
 Rosemount's Thermowells supporting custom functions for Google Spreadsheet.
 Functions provided: [HUMAN](#human), [MAKEWELL](#makewell), [TOD01](#tod01), [TO114C](#to114c), [TO0096](#to0096).
 
+
 ## HUMAN
 Display human readable form of an order code.
 
@@ -16,6 +17,7 @@ where:
             If `3` - a column range with headers. If `4` - a row range with headers.
 			Last two are calculated only for the first cell of the input `range`.
 
+Readyness: :heavy_check_mark: (done)
 
 
 ## MAKEWELL
@@ -194,6 +196,7 @@ Parameters:
 
 - `options` - List of options. Separated with any non-letter and non-numeric symbol, or without any separator. May be empty.
 
+Readyness: :x: (in progress)
 
 
 ## TOD01
@@ -207,6 +210,7 @@ Parameters:
 
 - `range` - A range containing order code strings.
 
+Readyness: :x: (in progress)
 
 
 ## TO114C
@@ -220,6 +224,7 @@ Parameters:
 
 - `range` - A range containing order code strings.
 
+Readyness: :x: (in progress)
 
 
 ## TO0096
@@ -232,3 +237,5 @@ Format:
 Parameters:
 
 - `range` - A range containing order code strings.
+
+Readyness: :x: (in progress)
